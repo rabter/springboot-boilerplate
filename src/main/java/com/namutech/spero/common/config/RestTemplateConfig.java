@@ -6,7 +6,7 @@ import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
 /**
- *  HTTP 클라이언트 라이브러리 RestTemplate bean 등록
+ * HTTP 클라이언트 라이브러리 RestTemplate bean 등록
  */
 @Configuration
 public class RestTemplateConfig {

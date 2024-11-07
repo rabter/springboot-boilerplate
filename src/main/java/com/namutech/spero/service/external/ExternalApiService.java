@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 /**
- *  외부 API 통신을 통한 비즈니스 로직를 담당하는 Service 레이어 클래스
+ * 외부 API 통신을 통한 비즈니스 로직를 담당하는 Service 레이어 클래스
  */
 @Service
 public class ExternalApiService {

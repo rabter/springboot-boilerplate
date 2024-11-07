@@ -23,52 +23,52 @@ import static org.junit.jupiter.api.Assertions.*;
 @Rollback
 class SperoApplicationTests {
 
-	@Autowired
-	private ConfigService configService;
+    @Autowired
+    private ConfigService configService;
 
-	@Autowired
-	private ConfigRepository configRepository;
+    @Autowired
+    private ConfigRepository configRepository;
 
-	//@BeforeEach
-	public void setUp() {
-		//테스트용 데이터 추가
-		configRepository.save(Config.builder().configKey("configKey1").configValue("configValue1").configGroup("group1").configGroupDescription("groupDesc1").build());
-	}
+    //@BeforeEach
+    public void setUp() {
+        //테스트용 데이터 추가
+        configRepository.save(Config.builder().configKey("configKey1").configValue("configValue1").configGroup("group1").configGroupDescription("groupDesc1").build());
+    }
 
-	@Test
-	public void contextLoads() {
-		System.out.println("GetAllConfigs Test 입니다.");
+    @Test
+    public void contextLoads() {
+        System.out.println("GetAllConfigs Test 입니다.");
 
-		List<Config> configs = configService.getAllConfigs();
+        List<Config> configs = configService.getAllConfigs();
 
-		// 검증
-		assertNotNull(configs);
-		assertEquals(2, configs.size());
+        // 검증
+        assertNotNull(configs);
+        assertEquals(2, configs.size());
         assertEquals("downloadFileFormat", configs.get(0).getConfigKey(), "기대된 값과 다르게 나옴");
 
-	}
+    }
 
-	@Test
-	public void createConfigTest() {
-		System.out.println("Create Config Test 입니다.");
-		ConfigDTO configDTO = ConfigDTO.builder()
-				.configKey("testKey1")
-				.configValue("testValue1")
-				.description("testDescription1")
-				.configGroup("testGroup1")
-				.configGroupDescription("testGroupDescription1")
-				.build();
+    @Test
+    public void createConfigTest() {
+        System.out.println("Create Config Test 입니다.");
+        ConfigDTO configDTO = ConfigDTO.builder()
+                .configKey("testKey1")
+                .configValue("testValue1")
+                .description("testDescription1")
+                .configGroup("testGroup1")
+                .configGroupDescription("testGroupDescription1")
+                .build();
 
-		Config config = configService.createConfig(configDTO);
+        Config config = configService.createConfig(configDTO);
 
-		assertEquals("testGroup1", config.getConfigGroup());
-	}
+        assertEquals("testGroup1", config.getConfigGroup());
+    }
 
-	@Test
-	public void getDataExternalService() {
-		ResponseEntity<String> res = configService.getData();
+    @Test
+    public void getDataExternalService() {
+        ResponseEntity<String> res = configService.getData();
 
-		System.out.println(res.getBody());
-	}
+        System.out.println(res.getBody());
+    }
 
 }
