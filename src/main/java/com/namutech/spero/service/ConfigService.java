@@ -3,7 +3,9 @@ package com.namutech.spero.service;
 import com.namutech.spero.dto.ConfigDTO;
 import com.namutech.spero.entity.Config;
 import com.namutech.spero.repository.ConfigRepository;
+import com.namutech.spero.service.external.ExternalApiService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,9 +17,17 @@ public class ConfigService {
     @Autowired
     private ConfigRepository configRepository;
 
+    @Autowired
+    private ExternalApiService externalApiService;
 
     public List<Config> getAllConfigs() {
         return configRepository.findAll();
+    }
+
+    public ResponseEntity<String> getData() {
+        String url = "https://www.naver.com";
+
+        return externalApiService.getData(url);
     }
 
     @Transactional

@@ -1,13 +1,15 @@
 package com.namutech.spero;
 
+import com.namutech.spero.common.config.RestTemplateConfig;
 import com.namutech.spero.dto.ConfigDTO;
 import com.namutech.spero.entity.Config;
 import com.namutech.spero.repository.ConfigRepository;
 import com.namutech.spero.service.ConfigService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,6 +18,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
+@Import(RestTemplateConfig.class)
 @Transactional
 @Rollback
 class SperoApplicationTests {
@@ -59,6 +62,13 @@ class SperoApplicationTests {
 		Config config = configService.createConfig(configDTO);
 
 		assertEquals("testGroup1", config.getConfigGroup());
+	}
+
+	@Test
+	public void getDataExternalService() {
+		ResponseEntity<String> res = configService.getData();
+
+		System.out.println(res.getBody());
 	}
 
 }
