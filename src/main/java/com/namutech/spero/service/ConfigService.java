@@ -34,15 +34,15 @@ public class ConfigService {
     @Transactional
     public Config createConfig(ConfigDTO configDTO) {
         try {
-            Config config = configDTO.toEntity();
-
-//            # 정적 팩토리 메소드 방식으로 생성 예제
-//            Config config = Config.create(
-//                    configDTO.getConfigKey(),
-//                    configDTO.getConfigValue(),
-//                    configDTO.getDescription(),
-//                    ConfigGroup.valueOf(configDTO.getConfigGroup())
-//            );
+//  1. Builder 패턴 방식으로 생성 예제
+//            Config config = configDTO.toEntity();
+//  2. 정적 팩토리 메소드 방식으로 생성 예제
+            Config config = Config.create(
+                    configDTO.getConfigKey(),
+                    configDTO.getConfigValue(),
+                    configDTO.getDescription(),
+                    ConfigGroup.valueOf(configDTO.getConfigGroup())
+            );
             return configRepository.save(config);
         } catch (IllegalArgumentException e) {
             System.out.println("예외발생 :" + e.getMessage());
