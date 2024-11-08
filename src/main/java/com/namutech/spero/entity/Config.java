@@ -5,7 +5,7 @@ import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -26,10 +26,10 @@ public class Config {
     private String configGroupDescription;
 
     @CreatedDate
-    private Timestamp createAt;
+    private LocalDateTime createAt;
 
     @LastModifiedDate
-    private Timestamp updateAt;
+    private LocalDateTime updateAt;
 
     @Builder
     public Config(String configKey, String configValue, String description, String configGroup, String configGroupDescription) {
@@ -42,9 +42,9 @@ public class Config {
 
     /**
      *  정적 팩토리 메서드
-     * @param configKey
-     * @param configValue
-     * @param description
+     * @param configKey (설정 키)
+     * @param configValue (설정 값)
+     * @param description (설명)
      * @return Config
      */
     public static Config create(String configKey, String configValue, String description, String configGroup) {
