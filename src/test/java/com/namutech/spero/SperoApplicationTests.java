@@ -3,8 +3,10 @@ package com.namutech.spero;
 import com.namutech.spero.common.config.RestTemplateConfig;
 import com.namutech.spero.dto.ConfigDTO;
 import com.namutech.spero.entity.Config;
+import com.namutech.spero.enums.ConfigGroup;
 import com.namutech.spero.repository.ConfigRepository;
 import com.namutech.spero.service.ConfigService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -29,10 +31,10 @@ class SperoApplicationTests {
     @Autowired
     private ConfigRepository configRepository;
 
-    //@BeforeEach
+    @BeforeEach
     public void setUp() {
         //테스트용 데이터 추가
-        configRepository.save(Config.builder().configKey("configKey1").configValue("configValue1").configGroup("group1").configGroupDescription("groupDesc1").build());
+        configRepository.save(Config.builder().configKey("configKey1").configValue("configValue1").configGroup(ConfigGroup.SETTING).configGroupDescription("groupDesc1").build());
     }
 
     @Test
@@ -55,13 +57,13 @@ class SperoApplicationTests {
                 .configKey("testKey1")
                 .configValue("testValue1")
                 .description("testDescription1")
-                .configGroup("testGroup1")
+                .configGroup(ConfigGroup.SETTING.name())
                 .configGroupDescription("testGroupDescription1")
                 .build();
 
         Config config = configService.createConfig(configDTO);
 
-        assertEquals("testGroup1", config.getConfigGroup());
+        assertEquals("SETTING", config.getConfigGroup().name());
     }
 
     @Test

@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
-
+import com.namutech.spero.enums.ConfigGroup;
 import java.time.LocalDateTime;
 
 @Entity
@@ -21,7 +21,8 @@ public class Config {
     private String configValue;
     private String description;
 
-    private String configGroup;
+    @Enumerated(EnumType.STRING)
+    private ConfigGroup configGroup;
 
     private String configGroupDescription;
 
@@ -32,7 +33,7 @@ public class Config {
     private LocalDateTime updateAt;
 
     @Builder
-    public Config(String configKey, String configValue, String description, String configGroup, String configGroupDescription) {
+    public Config(String configKey, String configValue, String description, ConfigGroup configGroup, String configGroupDescription) {
         this.configKey = configKey;
         this.configValue = configValue;
         this.description = description;
@@ -47,7 +48,7 @@ public class Config {
      * @param description (설명)
      * @return Config
      */
-    public static Config create(String configKey, String configValue, String description, String configGroup) {
+    public static Config create(String configKey, String configValue, String description, ConfigGroup configGroup) {
 
         // 필수 유효성 검사
         if (configKey == null || configKey.isEmpty()) {
@@ -55,8 +56,8 @@ public class Config {
         }
 
         // 커스터마이징
-        if (configGroup == null || configGroup.isEmpty()) {
-            configGroup = "DEFAULT_GROUP";
+        if (configGroup == null || configGroup.getName().isEmpty()) {
+            configGroup = ConfigGroup.DEFAULT;
         }
 
         return Config.builder()
@@ -65,6 +66,14 @@ public class Config {
                 .description(description)
                 .configGroup(configGroup)
                 .build();
+    }
+
+    /**
+     *  Enum 클래스를 이용한 메소드
+     * @return code (String)
+     */
+    public String getConfigGroupCode() {
+        return configGroup.getCode();
     }
 
 }

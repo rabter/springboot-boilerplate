@@ -2,6 +2,7 @@ package com.namutech.spero.service;
 
 import com.namutech.spero.dto.ConfigDTO;
 import com.namutech.spero.entity.Config;
+import com.namutech.spero.enums.ConfigGroup;
 import com.namutech.spero.repository.ConfigRepository;
 import com.namutech.spero.service.external.ExternalApiService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,13 +34,15 @@ public class ConfigService {
     @Transactional
     public Config createConfig(ConfigDTO configDTO) {
         try {
-            // Config config = configDTO.toEntity();
-            Config config = Config.create(
-                    configDTO.getConfigKey(),
-                    configDTO.getConfigValue(),
-                    configDTO.getDescription(),
-                    configDTO.getConfigGroup()
-            );
+            Config config = configDTO.toEntity();
+
+//            # 정적 팩토리 메소드 방식으로 생성 예제
+//            Config config = Config.create(
+//                    configDTO.getConfigKey(),
+//                    configDTO.getConfigValue(),
+//                    configDTO.getDescription(),
+//                    ConfigGroup.valueOf(configDTO.getConfigGroup())
+//            );
             return configRepository.save(config);
         } catch (IllegalArgumentException e) {
             System.out.println("예외발생 :" + e.getMessage());
