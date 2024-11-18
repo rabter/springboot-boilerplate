@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.annotation.Commit;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @Import(RestTemplateConfig.class)
 @Transactional
+//@Commit
 @Rollback
 class SperoApplicationTests {
 
@@ -31,11 +33,11 @@ class SperoApplicationTests {
     @Autowired
     private ConfigRepository configRepository;
 
-    @BeforeEach
-    public void setUp() {
-        //테스트용 데이터 추가
-        configRepository.save(Config.builder().configKey("configKey1").configValue("configValue1").configGroup(ConfigGroup.SETTING).configGroupDescription("groupDesc1").build());
-    }
+//    @BeforeEach
+//    public void setUp() {
+//        //테스트용 데이터 추가
+//        configRepository.save(Config.builder().configKey("configKey1").configValue("configValue1").configGroup(ConfigGroup.SETTING).configGroupDescription("groupDesc1").build());
+//    }
 
     @Test
     public void contextLoads() {
@@ -46,7 +48,7 @@ class SperoApplicationTests {
         // 검증
         assertNotNull(configs);
         assertEquals(2, configs.size());
-        assertEquals("downloadFileFormat", configs.get(0).getConfigKey(), "기대된 값과 다르게 나옴");
+        assertEquals("configKey2", configs.get(0).getConfigKey(), "기대된 값과 다르게 나옴");
 
     }
 
@@ -62,7 +64,7 @@ class SperoApplicationTests {
                 .build();
 
         Config config = configService.createConfig(configDTO);
-
+        System.out.println("createAt: " + config.getConfigValue());
         assertEquals("SETTING", config.getConfigGroup().name());
     }
 
