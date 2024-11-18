@@ -16,4 +16,8 @@ public class BillingService {
     public List<Billing> getAllBillings() {
         return billingRepository.findAll();
     }
+
+    public List<Billing> getAllBillingByCspType(String cspType) {
+        return billingRepository.findAllByCspType(cspType);
+    }
 }

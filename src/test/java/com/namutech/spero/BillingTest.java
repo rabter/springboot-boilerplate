@@ -26,4 +26,12 @@ public class BillingTest {
 
         assertEquals(2, billings.size());
     }
+
+    @Test
+    public void getAllBillingByCspType() {
+        String cspType = "aws";
+        List<Billing> billings = billingService.getAllBillingByCspType(cspType);
+
+        assertEquals(1, billings.size());
+    }
 }
