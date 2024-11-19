@@ -1,5 +1,6 @@
 package com.namutech.spero;
 
+import com.namutech.spero.dto.BillingDTO;
 import com.namutech.spero.entity.Billing;
 import com.namutech.spero.service.BillingService;
 import org.junit.jupiter.api.Test;
@@ -33,5 +34,21 @@ public class BillingTest {
         List<Billing> billings = billingService.getAllBillingByCspType(cspType);
 
         assertEquals(1, billings.size());
+    }
+
+    @Test
+    public void createBilling() {
+        BillingDTO billingDTO = BillingDTO.builder()
+                .billingDate("2024-10")
+                .cspType("aws")
+                .defaultCurrency("USD")
+                .amount(10.0)
+                .amountKRW(13000.0)
+                .cloudId("cloud005-aws-ap-northeast-2")
+                .build();
+
+        Billing billing = billingService.createBilling(billingDTO);
+
+        assertEquals("USD", billing.getDefaultCurrency());
     }
 }
