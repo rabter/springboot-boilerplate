@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class BillingService {
@@ -15,8 +16,11 @@ public class BillingService {
     @Autowired
     private BillingRepository billingRepository;
 
-    public List<Billing> getAllBillings() {
-        return billingRepository.findAll();
+    public List<BillingDTO> getAllBillings() {
+        List<Billing> billings = billingRepository.findAll();
+        return billings.stream()
+                .map(BillingDTO::of)
+                .collect(Collectors.toList());
     }
 
     public List<Billing> getAllBillingByCspType(String cspType) {

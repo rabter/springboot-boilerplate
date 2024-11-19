@@ -38,4 +38,15 @@ public class BillingDTO {
                 .cloudId(cloudId)
                 .build();
     }
+
+    public static BillingDTO of(Billing billing) {
+        return BillingDTO.builder()
+                .billingDate(billing.getBillingDate())
+                .cspType(billing.getCspType())
+                .defaultCurrency(billing.getDefaultCurrency())
+                .amount(billing.getAmount())
+                .amountKRW(billing.getAmountKRW())
+                .cloudId(billing.getCloudId())
+                .build();
+    }
 }

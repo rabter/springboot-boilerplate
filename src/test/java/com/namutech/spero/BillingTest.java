@@ -23,7 +23,7 @@ public class BillingTest {
 
     @Test
     public void getAllBillings() {
-        List<Billing> billings = billingService.getAllBillings();
+        List<BillingDTO> billings = billingService.getAllBillings();
 
         assertEquals(2, billings.size());
     }
