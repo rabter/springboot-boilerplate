@@ -5,6 +5,7 @@ import com.namutech.spero.entity.Config;
 import com.namutech.spero.enums.ConfigGroup;
 import com.namutech.spero.repository.ConfigRepository;
 import com.namutech.spero.service.external.ExternalApiService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Slf4j
 @Service
 public class ConfigService {
 
@@ -45,7 +47,7 @@ public class ConfigService {
             );
             return configRepository.save(config);
         } catch (IllegalArgumentException e) {
-            System.out.println("예외발생 :" + e.getMessage());
+            log.info("예외발생 : {}", e.getMessage());
             throw e;
         }
     }

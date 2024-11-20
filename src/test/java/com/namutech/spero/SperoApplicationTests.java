@@ -6,6 +6,7 @@ import com.namutech.spero.entity.Config;
 import com.namutech.spero.enums.ConfigGroup;
 import com.namutech.spero.repository.ConfigRepository;
 import com.namutech.spero.service.ConfigService;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@Slf4j
 @SpringBootTest
 @Import(RestTemplateConfig.class)
 @Transactional
@@ -41,7 +43,7 @@ class SperoApplicationTests {
 
     @Test
     public void contextLoads() {
-        System.out.println("GetAllConfigs Test 입니다.");
+        log.info("GetAllConfigs Test 입니다.");
 
         List<Config> configs = configService.getAllConfigs();
 
@@ -54,7 +56,7 @@ class SperoApplicationTests {
 
     @Test
     public void createConfigTest() {
-        System.out.println("Create Config Test 입니다.");
+        log.info("Create Config Test 입니다.");
         ConfigDTO configDTO = ConfigDTO.builder()
                 .configKey("testKey1")
                 .configValue("testValue1")
@@ -64,7 +66,7 @@ class SperoApplicationTests {
                 .build();
 
         Config config = configService.createConfig(configDTO);
-        System.out.println("createAt: " + config.getConfigValue());
+        log.info("createAt: {}", config.getConfigValue());
         assertEquals("SETTING", config.getConfigGroup().name());
     }
 
@@ -72,7 +74,7 @@ class SperoApplicationTests {
     public void getDataExternalService() {
         ResponseEntity<String> res = configService.getData();
 
-        System.out.println(res.getBody());
+        log.info(res.getBody());
     }
 
 }

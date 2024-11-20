@@ -3,6 +3,7 @@ package com.namutech.spero.service;
 import com.namutech.spero.dto.BillingDTO;
 import com.namutech.spero.entity.Billing;
 import com.namutech.spero.repository.BillingRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class BillingService {
 
@@ -33,7 +35,7 @@ public class BillingService {
             Billing billing = billingDTO.toEntity();
             return billingRepository.save(billing);
         } catch (IllegalArgumentException e) {
-            System.out.println("예외발생 :" + e.getMessage());
+            log.info("예외발생 : {}", e.getMessage());
             throw e;
         }
     }
