@@ -1,6 +1,6 @@
 package com.namutech.spero.dto;
 
-import com.namutech.spero.common.exception.InvalidConfigGroupException;
+import com.namutech.spero.common.exception.CustomInvalidConfigGroupException;
 import com.namutech.spero.entity.Config;
 import com.namutech.spero.enums.ConfigGroup;
 import lombok.Builder;
@@ -32,7 +32,7 @@ public class ConfigDTO {
         try {
             enumConfigGroup = ConfigGroup.valueOf(configGroup.toUpperCase());
         } catch (IllegalArgumentException e) {
-            throw new InvalidConfigGroupException("유효하지 않은 configGroup 값입니다: " + configGroup);
+            throw new CustomInvalidConfigGroupException("유효하지 않은 configGroup 값입니다: " + configGroup);
         }
 
         return Config.builder()
