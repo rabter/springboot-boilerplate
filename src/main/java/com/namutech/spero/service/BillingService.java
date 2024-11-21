@@ -5,6 +5,8 @@ import com.namutech.spero.entity.Billing;
 import com.namutech.spero.repository.BillingRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +19,11 @@ public class BillingService {
 
     @Autowired
     private BillingRepository billingRepository;
+
+    public Page<BillingDTO> getPagedBillings(int page, int size) {
+        return billingRepository.findAllByOrderByBillingIdDesc(PageRequest.of(page, size))
+                .map(BillingDTO::of);
+    }
 
     public List<BillingDTO> getAllBillings() {
         List<Billing> billings = billingRepository.findAll();
