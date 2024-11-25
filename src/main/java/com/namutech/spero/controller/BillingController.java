@@ -24,17 +24,10 @@ public class BillingController {
 
     @GetMapping
     public ResponseEntity<ApiResponse<?>> getAllBillings(@RequestParam(defaultValue = "0") int page,
-                                                                        @RequestParam(defaultValue = "5") int size,
-                                                                        @RequestParam(defaultValue = "false") Boolean pagingYn) {
+                                                         @RequestParam(defaultValue = "5") int size) {
 
-        if (Boolean.TRUE.equals(pagingYn)) {
-            Page<BillingDTO> pagedResult = billingService.getPagedBillings(page, size);
-            return ResponseEntity.ok(new ApiResponse<>(true, pagedResult));
-        } else {
-            log.info("BillingController ::: getAllBillings()");
-            List<BillingDTO> billings = billingService.getAllBillings();
-            return ResponseEntity.ok(new ApiResponse<>(true, billings));
-        }
+        Page<BillingDTO> pagedResult = billingService.getPagedBillings(page, size);
+        return ResponseEntity.ok(new ApiResponse<>(true, pagedResult));
     }
 
 }
