@@ -1,6 +1,8 @@
 package com.namutech.spero.controller;
 
 import com.namutech.spero.common.ApiResponse;
+import com.namutech.spero.common.dto.PagingInfoDTO;
+import com.namutech.spero.common.util.PagingUtil;
 import com.namutech.spero.dto.BillingDTO;
 import com.namutech.spero.service.BillingService;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +29,9 @@ public class BillingController {
                                                          @RequestParam(defaultValue = "5") int size) {
 
         Page<BillingDTO> pagedResult = billingService.getPagedBillings(page, size);
-        return ResponseEntity.ok(new ApiResponse<>(true, pagedResult));
+
+        PagingInfoDTO pagingInfo = PagingUtil.createPagingInfo(pagedResult);
+        return ResponseEntity.ok(new ApiResponse<>(true, pagedResult.getContent(), pagingInfo));
     }
 
 }
