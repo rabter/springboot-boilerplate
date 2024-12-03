@@ -7,13 +7,11 @@ import com.namutech.spero.enums.ConfigGroup;
 import com.namutech.spero.repository.ConfigRepository;
 import com.namutech.spero.service.ConfigService;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.annotation.Commit;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @Transactional
 //@Commit
 @Rollback
-class SperoApplicationTests {
+class ConfigTest {
 
     @Autowired
     private ConfigService configService;

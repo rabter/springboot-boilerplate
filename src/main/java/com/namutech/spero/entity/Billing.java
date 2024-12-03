@@ -9,6 +9,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -34,6 +35,9 @@ public class Billing {
 
     @CreatedDate
     private LocalDateTime createAt;
+
+    @OneToMany(mappedBy = "billing", fetch = FetchType.LAZY)
+    private List<BillingDetail> billingDetails;
 
     @Builder
     public Billing(Double amount, Double amountKRW, String billingDate, String cspType, String defaultCurrency, String cloudId) {

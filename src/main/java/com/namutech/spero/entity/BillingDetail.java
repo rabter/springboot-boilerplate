@@ -31,6 +31,10 @@ public class BillingDetail {
     @CreatedDate
     private LocalDateTime createAt;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "billingId")
+    private Billing billing;
+
     @Builder
     public BillingDetail(String resourceType, String resourceInfo, Double resourceUseAmount, Double resourceUseAmountKRW, String billingDate, String cspType) {
         this.resourceType = resourceType;
