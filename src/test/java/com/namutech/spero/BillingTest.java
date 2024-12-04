@@ -2,13 +2,16 @@ package com.namutech.spero;
 
 import com.namutech.spero.dto.BillingDTO;
 import com.namutech.spero.entity.Billing;
+import com.namutech.spero.repository.BillingRepository;
 import com.namutech.spero.service.BillingService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Commit;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
+
 
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -17,10 +20,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest
 @Transactional
 @Rollback
+//@Commit
 public class BillingTest {
 
     @Autowired
     private BillingService billingService;
+
+    @Autowired
+    private BillingRepository billingRepository;
 
     @Test
     public void getAllBillings() {
@@ -52,5 +59,15 @@ public class BillingTest {
         Billing billing = billingService.createBilling(billingDTO);
 
         assertEquals("USD", billing.getDefaultCurrency());
+    }
+
+    @Test
+    public void updateBilling() {
+        Long billingId = 1L;
+        BillingDTO billingDTO = BillingDTO.builder().defaultCurrency("KRW").build();
+
+        BillingDTO updatedBilling = billingService.updateBilling(billingId, billingDTO);
+        assertEquals("KRW", updatedBilling.getDefaultCurrency());
+        assertEquals("ktCloud", updatedBilling.getCspType());
     }
 }

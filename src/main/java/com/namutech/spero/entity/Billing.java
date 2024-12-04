@@ -48,6 +48,10 @@ public class Billing {
         this.defaultCurrency = defaultCurrency;
         this.cloudId = cloudId;
     }
+
+    public void updateDefaultCurrency(String defaultCurrency) {
+        this.defaultCurrency = defaultCurrency;
+    }
 }
 
 

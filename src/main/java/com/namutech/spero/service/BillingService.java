@@ -46,4 +46,12 @@ public class BillingService {
             throw e;
         }
     }
+
+    @Transactional
+    public BillingDTO updateBilling(Long billingId, BillingDTO billingDTO) {
+        Billing existingBilling = billingRepository.findById(billingId)
+                .orElseThrow(() -> new IllegalArgumentException("Billing not found with id: " + billingId));
+        existingBilling.updateDefaultCurrency(billingDTO.getDefaultCurrency());
+        return BillingDTO.of(existingBilling);
+    }
 }
