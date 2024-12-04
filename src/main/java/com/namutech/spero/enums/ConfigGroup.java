@@ -19,4 +19,29 @@ public enum ConfigGroup {
         this.code = code;
         this.description = description;
     }
+
+    // code로 ConfigGroup 찾기
+    public static ConfigGroup findByCode(String code) {
+        for (ConfigGroup group : values()) {
+            if (group.getCode().equals(code)) {
+                return group;
+            }
+        }
+        return DEFAULT;
+    }
+
+    // name으로 ConfigGroup 찾기
+    public static ConfigGroup findByName(String name) {
+        for (ConfigGroup group : values()) {
+            if (group.getName().equals(name)) {
+                return group;
+            }
+        }
+        return DEFAULT;
+    }
+
+    // ConfigGroup이 유효한지 확인
+    public boolean isValid() {
+        return this != DEFAULT;
+    }
 }

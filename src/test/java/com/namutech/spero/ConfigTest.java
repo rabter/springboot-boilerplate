@@ -1,6 +1,7 @@
 package com.namutech.spero;
 
 import com.namutech.spero.common.config.RestTemplateConfig;
+import com.namutech.spero.common.util.CommonUtil;
 import com.namutech.spero.dto.ConfigDTO;
 import com.namutech.spero.entity.Config;
 import com.namutech.spero.enums.ConfigGroup;
@@ -73,6 +74,13 @@ class ConfigTest {
         ResponseEntity<String> res = configService.getData();
 
         log.info(res.getBody());
+    }
+
+    @Test
+    public void enumTest() {
+        ConfigGroup group = ConfigGroup.findByName("setting");
+        log.info("Enum Test 입니다.");
+        log.info("group: {}", group);
     }
 
 }
