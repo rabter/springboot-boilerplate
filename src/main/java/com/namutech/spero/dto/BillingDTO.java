@@ -14,7 +14,6 @@ import java.util.Map;
 @NoArgsConstructor
 public class BillingDTO {
 
-    private Long billingId;
     private String billingDate;
     private String cspType;
     private String defaultCurrency;
@@ -23,18 +22,15 @@ public class BillingDTO {
     private Double amountKRW;
 
     private String cloudId;
-    private String status;
 
     @Builder
-    public BillingDTO(Long billingId, String billingDate, String cspType, String defaultCurrency, Double amount, Double amountKRW, String cloudId, String status) {
-        this.billingId = billingId;
+    public BillingDTO(String billingDate, String cspType, String defaultCurrency, Double amount, Double amountKRW, String cloudId) {
         this.billingDate = billingDate;
         this.cspType = cspType;
         this.defaultCurrency = defaultCurrency;
         this.amount = amount;
         this.amountKRW = amountKRW;
         this.cloudId = cloudId;
-        this.status = status;
     }
 
     public Billing toEntity() {
@@ -59,14 +55,13 @@ public class BillingDTO {
                 .build();
     }
 
-    public Map<String, Object> getNonNullFields() {
-        Map<String, Object> nonNullFields = new HashMap<>();
-        if (cspType != null) nonNullFields.put("cspType", cspType);
-        if (billingDate != null) nonNullFields.put("billingDate", billingDate);
-        if (defaultCurrency != null) nonNullFields.put("defaultCurrency", defaultCurrency);
-        if (amount != null) nonNullFields.put("amount", amount);
-        if (amountKRW != null) nonNullFields.put("amountKRW", amountKRW);
-        if (cloudId != null) nonNullFields.put("cloudId", cloudId);
-        return nonNullFields;
+    /**
+     * Custom Getter 메서드 (JSON 응답에 포함됨)
+     * @return Map
+     */
+    public Map<String, Object> getBillingSummary() {
+        Map<String, Object> summary = new HashMap<>();
+        summary.put("displayValue", amount + defaultCurrency);
+        return summary;
     }
 }
