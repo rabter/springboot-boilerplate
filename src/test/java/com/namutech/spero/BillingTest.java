@@ -5,6 +5,7 @@ import com.namutech.spero.entity.Billing;
 import com.namutech.spero.repository.BillingRepository;
 import com.namutech.spero.service.BillingService;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -34,15 +35,16 @@ public class BillingTest {
         List<BillingDTO> billings = billingService.getAllBillings();
 
         log.info("Billing List Size : {}", billings.size());
-        assertEquals(2, billings.size());
+        assertEquals(11, billings.size());
     }
 
+    @DisplayName("CSP별 Billing 조회")
     @Test
     public void getAllBillingByCspType() {
         String cspType = "aws";
         List<Billing> billings = billingService.getAllBillingByCspType(cspType);
 
-        assertEquals(1, billings.size());
+        assertEquals(6, billings.size());
     }
 
     @Test

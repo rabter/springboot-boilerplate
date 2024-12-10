@@ -4,10 +4,14 @@ import com.namutech.spero.common.config.RestTemplateConfig;
 import com.namutech.spero.common.util.CommonUtil;
 import com.namutech.spero.dto.ConfigDTO;
 import com.namutech.spero.entity.Config;
+import com.namutech.spero.entity.QConfig;
 import com.namutech.spero.enums.ConfigGroup;
 import com.namutech.spero.repository.ConfigRepository;
 import com.namutech.spero.service.ConfigService;
+import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,6 +21,7 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -33,6 +38,9 @@ class ConfigTest {
 
     @Autowired
     private ConfigRepository configRepository;
+
+    @Autowired
+    private JPAQueryFactory jpaQueryFactory;
 
 //    @BeforeEach
 //    public void setUp() {
@@ -83,4 +91,34 @@ class ConfigTest {
         log.info("group: {}", group);
     }
 
+
+    @Test
+    @DisplayName("QueryDSL BooleanExpression 테스트입니다. ")
+    public void dynamicQueryTest() {
+        String configKeyParam = "testKey2";
+        String configValueParam = "testValue2";
+
+        List<Config> result = searchConfig(configKeyParam, configValueParam);
+
+        assertEquals("testDescription1", result.get(0).getDescription());
+    }
+
+    private List<Config> searchConfig(String configKeyCond, String configValueCond) {
+        return jpaQueryFactory
+                .select(QConfig.config)
+                .from(QConfig.config)
+                .where(eqConfigKey(configKeyCond),
+                        eqConfigValue(configValueCond))
+                .fetch();
+    }
+
+    private BooleanExpression eqConfigKey(String configKeyCond) {
+        if(Objects.isNull(configKeyCond)) { return null; }
+        return QConfig.config.configKey.eq(configKeyCond);
+    }
+
+    private BooleanExpression eqConfigValue(String configValueCond) {
+        if(Objects.isNull(configValueCond)) { return null; }
+        return QConfig.config.configValue.eq(configValueCond);
+    }
 }
