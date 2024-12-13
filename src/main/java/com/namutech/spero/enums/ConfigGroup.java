@@ -1,47 +1,44 @@
 package com.namutech.spero.enums;
 
+import com.namutech.spero.entity.Config;
 import lombok.Getter;
+
+import java.util.Arrays;
 
 @Getter
 public enum ConfigGroup {
-    LOGIN("login", "code001", "User login configuration"),
-    DASHBOARD("dashboard", "code002", "Dashboard settings"),
-    BILLING("billing", "code003", "Billing configurations"),
-    SETTING("setting", "code004", "General settings"),
-    DEFAULT("default", "code999", "Default Group");
+    SYSTEM_PERFORMANCE("systemPerformance", "성능 데이터"),
+    RETENTION("retention", "통계 데이터 보관 주기"),
+    HEALTH_CHECK("healthCheck", "헬스 체크"),
+    METERING("metering", "미터링 데이터"),
+    INFLUXDB("influxDB", "influxDB 설정값"),
+    STAT("stat", "라이프사이클 통계 데이터 보관 주기"),
+    LOGEVENT("logEvent", "로그/이벤트 데이터 관리"),
+    OSFLAVOR("osFlavor", "Flavor/Image 업데이트 주기"),
+    COCKTAIL("cocktail", "cocktail 링크"),
+    ONPREMISE("onPremise", "온프레미스 수집 주기");
 
     private final String name;
-    private final String code;
     private final String description;
 
-    ConfigGroup(String name, String code, String description) {
+    ConfigGroup(String name, String description) {
         this.name = name;
-        this.code = code;
         this.description = description;
     }
 
-    // code로 ConfigGroup 찾기
-    public static ConfigGroup findByCode(String code) {
-        for (ConfigGroup group : values()) {
-            if (group.getCode().equals(code)) {
-                return group;
-            }
-        }
-        return DEFAULT;
-    }
-
-    // name으로 ConfigGroup 찾기
     public static ConfigGroup findByName(String name) {
-        for (ConfigGroup group : values()) {
-            if (group.getName().equals(name)) {
+        return Arrays.stream(ConfigGroup.values())
+                .filter(group -> group.getName().equals(name))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("해당하는 값이 없습니다."));
+    }
+
+    public static ConfigGroup fromName(String name) {
+        for (ConfigGroup group : ConfigGroup.values()) {
+            if (group.getName().equalsIgnoreCase(name)) {
                 return group;
             }
         }
-        return DEFAULT;
-    }
-
-    // ConfigGroup이 유효한지 확인
-    public boolean isValid() {
-        return this != DEFAULT;
+        throw new IllegalArgumentException("No ConfigGroup found for name: " + name);
     }
 }

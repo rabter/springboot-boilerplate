@@ -1,8 +1,8 @@
 package com.namutech.spero;
 
 import com.namutech.spero.common.config.RestTemplateConfig;
-import com.namutech.spero.common.util.CommonUtil;
 import com.namutech.spero.dto.ConfigDTO;
+import com.namutech.spero.dto.ConfigSearchConditionDTO;
 import com.namutech.spero.entity.Config;
 import com.namutech.spero.entity.QConfig;
 import com.namutech.spero.enums.ConfigGroup;
@@ -68,7 +68,7 @@ class ConfigTest {
                 .configKey("testKey1")
                 .configValue("testValue1")
                 .description("testDescription1")
-                .configGroup(ConfigGroup.SETTING.name())
+                .configGroup(ConfigGroup.LOGEVENT.getName())
                 .configGroupDescription("testGroupDescription1")
                 .build();
 
@@ -86,21 +86,33 @@ class ConfigTest {
 
     @Test
     public void enumTest() {
-        ConfigGroup group = ConfigGroup.findByName("setting");
+//        ConfigGroup group = ConfigGroup.findByName("systemPerformance");
+        ConfigGroup group = ConfigGroup.fromName("systemPerformance");
         log.info("Enum Test 입니다.");
         log.info("group: {}", group);
     }
 
+    @Test
+    @DisplayName("동적쿼리를 위한 서비스테스트")
+    public void getConfigWithConditions() {
+        ConfigSearchConditionDTO condition = ConfigSearchConditionDTO.builder()
+                .configKey("syste")
+                .configValue(null)
+                .build();
+        List<Config> result = configService.getConfigWithConditions(condition);
 
+        assertEquals(3, result.size());
+    }
     @Test
     @DisplayName("QueryDSL BooleanExpression 테스트입니다. ")
     public void dynamicQueryTest() {
-        String configKeyParam = "testKey2";
-        String configValueParam = "testValue2";
+        String configKeyParam = "doMetering";
+        String configValueParam = "Y";
 
         List<Config> result = searchConfig(configKeyParam, configValueParam);
 
-        assertEquals("testDescription1", result.get(0).getDescription());
+        assertFalse(result.isEmpty());
+        assertEquals("doMetering", result.get(0).getConfigKey());
     }
 
     private List<Config> searchConfig(String configKeyCond, String configValueCond) {

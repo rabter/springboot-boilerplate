@@ -1,9 +1,11 @@
 package com.namutech.spero.service;
 
 import com.namutech.spero.dto.ConfigDTO;
+import com.namutech.spero.dto.ConfigSearchConditionDTO;
 import com.namutech.spero.entity.Config;
 import com.namutech.spero.enums.ConfigGroup;
 import com.namutech.spero.repository.ConfigRepository;
+import com.namutech.spero.repository.ConfigRepositoryCustom;
 import com.namutech.spero.service.external.ExternalApiService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +23,17 @@ public class ConfigService {
     private ConfigRepository configRepository;
 
     @Autowired
+    private ConfigRepositoryCustom configRepositoryCustom;
+
+    @Autowired
     private ExternalApiService externalApiService;
 
     public List<Config> getAllConfigs() {
         return configRepository.findAll();
+    }
+
+    public List<Config> getConfigWithConditions(ConfigSearchConditionDTO condition) {
+        return configRepositoryCustom.findwithConditions(condition);
     }
 
     public ResponseEntity<String> getData() {

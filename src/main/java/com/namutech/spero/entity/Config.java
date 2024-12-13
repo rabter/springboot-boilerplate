@@ -58,11 +58,6 @@ public class Config {
             throw new IllegalArgumentException("configKey는 반드시 존재해야 합니다.");
         }
 
-        // 커스터마이징
-        if (configGroup == null || configGroup.getName().isEmpty()) {
-            configGroup = ConfigGroup.DEFAULT;
-        }
-
         return Config.builder()
                 .configKey(configKey)
                 .configValue(configValue)
@@ -76,7 +71,7 @@ public class Config {
      * @return code (String)
      */
     public String getConfigGroupCode() {
-        return configGroup.getCode();
+        return configGroup.getName();
     }
 
 }
