@@ -1,6 +1,5 @@
 package com.namutech.spero.repository;
 
-import com.namutech.spero.dto.ConfigDTO;
 import com.namutech.spero.dto.ConfigSearchConditionDTO;
 import com.namutech.spero.entity.Config;
 import com.namutech.spero.entity.QConfig;
