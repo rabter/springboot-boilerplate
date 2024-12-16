@@ -32,11 +32,13 @@ public class EquipmentTest {
     @DisplayName("Equipment 전체 조회")
     public void getAllEquipment() {
         List<Equipment> equipmentList = equipmentService.getAllEquipment();
-        for (Equipment equipment : equipmentList) {
+       for (Equipment equipment : equipmentList) {
+            log.info("equipmentId: {}", Optional.ofNullable(equipment.getEquipmentId()));
+            log.info("parentId: {}", Optional.ofNullable(equipment.getParent()).map(Equipment::getEquipmentId).orElse(null));
             String parentName = Optional.ofNullable(equipment.getParent()).map(Equipment::getName).orElse("None");
             log.info("장비이름: {}, 부모 장비 이름 : {}", equipment.getName(), parentName);
         }
 
-        assertEquals(8, equipmentList.size());
+        assertEquals(9, equipmentList.size());
     }
 }

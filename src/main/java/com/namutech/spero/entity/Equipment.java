@@ -1,5 +1,7 @@
 package com.namutech.spero.entity;
 
+import com.namutech.spero.common.converter.EquipmentStatusConverter;
+import com.namutech.spero.enums.EquipmentStatus;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -26,12 +28,17 @@ public class Equipment {
     private Integer rackUnit;
     private String ip;
     private String ipmi;
-    private String status;
+
+    @Convert(converter = EquipmentStatusConverter.class)
+//   @Enumerated(EnumType.STRING)
+    private EquipmentStatus status;
+
     private String faultDescription;
 
     @ManyToOne
     @JoinColumn(name = "parentId", referencedColumnName = "equipmentId")
     private Equipment parent;
+
     private String oobmUsername;
     private String oobmPassword;
 
