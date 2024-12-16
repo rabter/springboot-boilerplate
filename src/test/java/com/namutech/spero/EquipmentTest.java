@@ -12,8 +12,12 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -40,5 +44,40 @@ public class EquipmentTest {
         }
 
         assertEquals(9, equipmentList.size());
+    }
+
+    @Test
+    @DisplayName("Stream() 테스트")
+    public void TestStreamAPI() {
+        List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9);
+
+        numbers.stream()
+                .filter(n -> n % 2 == 0)
+                .map(num -> String.valueOf(num * num))
+                .forEach(log::info);
+
+        List<String> names = Arrays.asList("John", "Jane", "Jake", "Charles", "Tom");
+
+        names.stream()
+                .filter(name -> name.startsWith("J"))
+                .sorted()
+                .forEach(System.out::println);
+
+        List<String> items = Arrays.asList("Apple", "Banana", "Apple", "Orange", "Banana", "Apple");
+        Map<String, Long> itemCount = items.stream()
+                .collect(Collectors.groupingBy(item -> item, Collectors.counting()));
+        log.info("itemCount:{}", itemCount);
+
+        List<Integer> sum_numbers = Arrays.asList(1, 2, 3, 4, 5);
+        int result = sum_numbers.stream()
+                .reduce(0, Integer::sum);
+        log.info("result:{}", result);
+
+        Stream<String> words = Stream.of("Java", "Stream", "API");
+
+        String words_result = words.map(String::toUpperCase)
+                .reduce("", (a, b) -> a + " " + b)
+                .trim();
+        log.info("words_result: {}", words_result);
     }
 }

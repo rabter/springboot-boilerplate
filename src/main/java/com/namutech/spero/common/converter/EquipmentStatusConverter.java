@@ -4,7 +4,7 @@ import com.namutech.spero.enums.EquipmentStatus;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 
-@Converter(autoApply = true)
+@Converter(autoApply = false)
 public class EquipmentStatusConverter implements AttributeConverter<EquipmentStatus,String> {
 
     @Override
