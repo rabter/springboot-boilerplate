@@ -4,6 +4,8 @@ import com.namutech.spero.common.ApiResponse;
 import com.namutech.spero.common.dto.PagingInfoDTO;
 import com.namutech.spero.common.util.PagingUtil;
 import com.namutech.spero.dto.BillingDTO;
+import com.namutech.spero.dto.BillingSearchConditionDTO;
+import com.namutech.spero.entity.Billing;
 import com.namutech.spero.service.BillingService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +26,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class BillingController {
 
     private final BillingService billingService;
+
+    @GetMapping("/search")
+    public ResponseEntity<ApiResponse<?>> getAllBillingSearch(@RequestBody BillingSearchConditionDTO condition) {
+        Page<Billing> billings = billingService.findAll(condition);
+        PagingInfoDTO pagingInfoDTO = PagingUtil.createPagingInfo(billings);
+        return ResponseEntity.ok(new ApiResponse<>(true, billings.getContent(), pagingInfoDTO));
+    }
 
     @GetMapping
     public ResponseEntity<ApiResponse<?>> getAllBillings(@RequestParam(defaultValue = "0") int page,

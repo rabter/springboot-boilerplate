@@ -1,6 +1,7 @@
 package com.namutech.spero;
 
 import com.namutech.spero.dto.BillingDTO;
+import com.namutech.spero.dto.BillingSearchConditionDTO;
 import com.namutech.spero.entity.Billing;
 import com.namutech.spero.repository.BillingRepository;
 import com.namutech.spero.service.BillingService;
@@ -9,7 +10,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Commit;
+import org.springframework.data.domain.Page;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,6 +30,17 @@ public class BillingTest {
 
     @Autowired
     private BillingRepository billingRepository;
+
+    @Test
+    @DisplayName("동적 페이징 조회 테스트")
+    public void findAll() {
+        BillingSearchConditionDTO condition = BillingSearchConditionDTO.builder()
+                .cspType("aws")
+                .pageNumber(2)
+                .pageSize(3)
+                .build();
+        Page<Billing> billings = billingService.findAll(condition);
+    }
 
     @Test
     public void getAllBillings() {
