@@ -4,6 +4,7 @@ import com.namutech.spero.common.ApiResponse;
 import com.namutech.spero.common.dto.PagingInfoDTO;
 import com.namutech.spero.common.util.PagingUtil;
 import com.namutech.spero.dto.BillingDTO;
+import com.namutech.spero.dto.BillingGetResponseDTO;
 import com.namutech.spero.dto.BillingSearchConditionDTO;
 import com.namutech.spero.entity.Billing;
 import com.namutech.spero.service.BillingService;
@@ -29,9 +30,16 @@ public class BillingController {
 
     @GetMapping("/search")
     public ResponseEntity<ApiResponse<?>> getAllBillingSearch(@RequestBody BillingSearchConditionDTO condition) {
+        // 1. Entity 조회
         Page<Billing> billings = billingService.getAllBillingSearch(condition);
-        PagingInfoDTO pagingInfoDTO = PagingUtil.createPagingInfo(billings);
-        return ResponseEntity.ok(new ApiResponse<>(true, billings.getContent(), pagingInfoDTO));
+
+        // 2. Entity to DTO 변환
+        Page<BillingDTO> billingDTOS = BillingGetResponseDTO.mapPage(billings, BillingDTO::of);
+
+        // 3. PagingInfo 생성
+        PagingInfoDTO pagingInfoDTO = PagingUtil.buildPagingInfo(billingDTOS);
+
+        return ResponseEntity.ok(new ApiResponse<>(true, billingDTOS.getContent(), pagingInfoDTO));
     }
 
     @GetMapping
@@ -40,7 +48,7 @@ public class BillingController {
 
         Page<BillingDTO> pagedResult = billingService.getPagedBillings(page, size);
 
-        PagingInfoDTO pagingInfo = PagingUtil.createPagingInfo(pagedResult);
+        PagingInfoDTO pagingInfo = PagingUtil.buildPagingInfo(pagedResult);
         return ResponseEntity.ok(new ApiResponse<>(true, pagedResult.getContent(), pagingInfo));
     }
 

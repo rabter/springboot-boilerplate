@@ -5,9 +5,9 @@ import org.springframework.data.domain.Page;
 
 public class PagingUtil {
 
-    public static PagingInfoDTO createPagingInfo(Page<?> page) {
+    public static PagingInfoDTO buildPagingInfo(Page<?> page) {
         return PagingInfoDTO.builder()
-                .pageNumber(page.getNumber())
+                .pageNumber(page.getNumber() + 1)
                 .pageSize(page.getSize())
                 .totalElements(page.getTotalElements())
                 .totalPages(page.getTotalPages())

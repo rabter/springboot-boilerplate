@@ -16,12 +16,12 @@ import java.util.function.Function;
 
 @Slf4j
 @Service
-public abstract class GenericService<T, Q extends EntityPath<T>, S> {
+public abstract class GenericService<T, Q extends EntityPath<T>> {
 
     @Autowired
     private JPAQueryFactory queryFactory;
 
-    public Page<T> findAll(S condition, Pageable pageable, Q qClass, Function<Q, BooleanExpression> predicateBuilder) {
+    public Page<T> findAll(Pageable pageable, Q qClass, Function<Q, BooleanExpression> predicateBuilder) {
         List<T> results = queryFactory
                 .selectFrom(qClass)
                 .where(predicateBuilder.apply(qClass))

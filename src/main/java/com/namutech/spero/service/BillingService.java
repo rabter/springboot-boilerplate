@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Service
-public class BillingService extends GenericService<Billing, QBilling, BillingSearchConditionDTO> {
+public class BillingService extends GenericService<Billing, QBilling> {
 
     @Autowired
     private BillingRepository billingRepository;
@@ -43,8 +43,8 @@ public class BillingService extends GenericService<Billing, QBilling, BillingSea
         return predicate;
     }
     public Page<Billing> getAllBillingSearch(BillingSearchConditionDTO condition) {
-        Pageable pageable = PageRequest.of(condition.getPageNumber(), condition.getPageSize());
-        return super.findAll(condition, pageable, QBilling.billing, q -> buildPredicate(q, condition));
+        Pageable pageable = PageRequest.of(condition.getPageNumber() - 1, condition.getPageSize());
+        return super.findAll(pageable, QBilling.billing, q -> buildPredicate(q, condition));
     }
     public Page<BillingDTO> getPagedBillings(int page, int size) {
         return billingRepository.findAllByOrderByBillingIdDesc(PageRequest.of(page, size))
