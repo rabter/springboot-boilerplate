@@ -39,7 +39,7 @@ public class BillingTest {
                 .pageNumber(2)
                 .pageSize(3)
                 .build();
-        Page<Billing> billings = billingService.findAll(condition);
+        Page<Billing> billings = billingService.getAllBillingSearch(condition);
     }
 
     @Test

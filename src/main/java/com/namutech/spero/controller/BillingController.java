@@ -29,7 +29,7 @@ public class BillingController {
 
     @GetMapping("/search")
     public ResponseEntity<ApiResponse<?>> getAllBillingSearch(@RequestBody BillingSearchConditionDTO condition) {
-        Page<Billing> billings = billingService.findAll(condition);
+        Page<Billing> billings = billingService.getAllBillingSearch(condition);
         PagingInfoDTO pagingInfoDTO = PagingUtil.createPagingInfo(billings);
         return ResponseEntity.ok(new ApiResponse<>(true, billings.getContent(), pagingInfoDTO));
     }

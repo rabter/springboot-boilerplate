@@ -42,7 +42,7 @@ public class BillingService extends GenericService<Billing, QBilling, BillingSea
 
         return predicate;
     }
-    public Page<Billing> findAll(BillingSearchConditionDTO condition) {
+    public Page<Billing> getAllBillingSearch(BillingSearchConditionDTO condition) {
         Pageable pageable = PageRequest.of(condition.getPageNumber(), condition.getPageSize());
         return super.findAll(condition, pageable, QBilling.billing, q -> buildPredicate(q, condition));
     }

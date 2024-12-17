@@ -36,8 +36,8 @@ public class Billing {
     @CreatedDate
     private LocalDateTime createAt;
 
-    @OneToMany(mappedBy = "billing", fetch = FetchType.LAZY)
-    private List<BillingDetail> billingDetails;
+//    @OneToMany(mappedBy = "billing", fetch = FetchType.LAZY)
+//    private List<BillingDetail> billingDetails;
 
     @Builder
     public Billing(Double amount, Double amountKRW, String billingDate, String cspType, String defaultCurrency, String cloudId) {
