@@ -42,6 +42,9 @@ dependencies {
 	annotationProcessor "com.querydsl:querydsl-apt:5.0.0:jakarta"
 	annotationProcessor "jakarta.annotation:jakarta.annotation-api"
 	annotationProcessor "jakarta.persistence:jakarta.persistence-api"
+
+	// P6Spy
+	implementation "com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.10.0" // 자동구성 starter 사용
 }
 
 tasks.named('test') {

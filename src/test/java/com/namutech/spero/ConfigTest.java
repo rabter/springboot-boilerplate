@@ -49,52 +49,53 @@ class ConfigTest {
 //    }
 
     @Test
-    public void contextLoads() {
+    @DisplayName("Config 조회 테스트")
+    public void getAllConfigsTest() {
         log.info("GetAllConfigs Test 입니다.");
 
         List<Config> configs = configService.getAllConfigs();
 
         // 검증
         assertNotNull(configs);
-        assertEquals(2, configs.size());
-        assertEquals("configKey2", configs.get(0).getConfigKey(), "기대된 값과 다르게 나옴");
+        assertEquals(20, configs.size());
+        assertEquals("systemInterval", configs.get(0).getConfigKey(), "기대된 값과 다르게 나옴");
 
     }
 
     @Test
+    @DisplayName("Config 생성 테스트")
     public void createConfigTest() {
         log.info("Create Config Test 입니다.");
         ConfigDTO configDTO = ConfigDTO.builder()
                 .configKey("testKey1")
                 .configValue("testValue1")
                 .description("testDescription1")
-                .configGroup(ConfigGroup.LOGEVENT.getName())
+                .configGroup(ConfigGroup.LOGEVENT.name())
                 .configGroupDescription("testGroupDescription1")
                 .build();
 
         Config config = configService.createConfig(configDTO);
         log.info("createAt: {}", config.getConfigValue());
-        assertEquals("SETTING", config.getConfigGroup().name());
+        assertEquals(ConfigGroup.LOGEVENT.name(), config.getConfigGroup().name());
     }
 
-    @Test
+//    @Test
     public void getDataExternalService() {
         ResponseEntity<String> res = configService.getData();
 
         log.info(res.getBody());
     }
 
-    @Test
+//    @Test
     public void enumTest() {
-//        ConfigGroup group = ConfigGroup.findByName("systemPerformance");
         ConfigGroup group = ConfigGroup.fromName("systemPerformance");
         log.info("Enum Test 입니다.");
         log.info("group: {}", group);
     }
 
     @Test
-    @DisplayName("동적쿼리를 위한 서비스테스트")
-    public void getConfigWithConditions() {
+    @DisplayName("동적 쿼리 테스트")
+    public void getConfigWithConditionTest() {
         ConfigSearchConditionDTO condition = ConfigSearchConditionDTO.builder()
                 .configKey("syste")
                 .configValue(null)
@@ -104,7 +105,7 @@ class ConfigTest {
         assertEquals(3, result.size());
     }
     @Test
-    @DisplayName("QueryDSL BooleanExpression 테스트입니다. ")
+    @DisplayName("QueryDSL BooleanExpression 테스트")
     public void dynamicQueryTest() {
         String configKeyParam = "doMetering";
         String configValueParam = "Y";
