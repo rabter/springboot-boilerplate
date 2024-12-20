@@ -8,9 +8,11 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 public abstract class BaseSearchDTO {
+    private static final int DEFAULT_PAGE_NUMBER = 1;
     private static final int DEFAULT_PAGE_SIZE = 10;
 
-    private int pageNumber;
+    @Builder.Default
+    private int pageNumber = DEFAULT_PAGE_NUMBER;
 
     @Builder.Default
     private int pageSize = DEFAULT_PAGE_SIZE;

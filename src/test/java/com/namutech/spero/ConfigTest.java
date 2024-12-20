@@ -66,6 +66,8 @@ class ConfigTest {
     @DisplayName("Config 생성 테스트")
     public void createConfigTest() {
         log.info("Create Config Test 입니다.");
+
+        // given
         ConfigDTO configDTO = ConfigDTO.builder()
                 .configKey("testKey1")
                 .configValue("testValue1")
@@ -74,8 +76,11 @@ class ConfigTest {
                 .configGroupDescription("testGroupDescription1")
                 .build();
 
+        // when
         Config config = configService.createConfig(configDTO);
         log.info("createAt: {}", config.getConfigValue());
+
+        // then
         assertEquals(ConfigGroup.LOGEVENT.name(), config.getConfigGroup().name());
     }
 
