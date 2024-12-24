@@ -36,7 +36,7 @@ public class Billing {
     @CreatedDate
     private LocalDateTime createAt;
 
-    @OneToMany(mappedBy = "billing", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "billing", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BillingDetail> billingDetails;
 
     @Builder

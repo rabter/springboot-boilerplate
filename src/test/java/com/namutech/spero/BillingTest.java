@@ -76,6 +76,7 @@ public class BillingTest {
     }
 
     @Test
+    @DisplayName("Billing 수정 테스트")
     public void updateBilling() {
         Long billingId = 1L;
         BillingDTO billingDTO = BillingDTO.builder().defaultCurrency("KRW").build();
@@ -83,5 +84,14 @@ public class BillingTest {
         BillingDTO updatedBilling = billingService.updateBilling(billingId, billingDTO);
         assertEquals("KRW", updatedBilling.getDefaultCurrency());
         assertEquals("ktCloud", updatedBilling.getCspType());
+    }
+
+    @Test
+    @DisplayName("Billing 삭제 테스트")
+    public void deleteBilling() {
+        Long billingId = 1L;
+        billingService.deleteBilling(billingId);
+
+        assertEquals(10, billingRepository.findAll().size());
     }
 }

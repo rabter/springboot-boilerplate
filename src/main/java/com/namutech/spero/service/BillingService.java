@@ -80,4 +80,12 @@ public class BillingService extends GenericService<Billing, QBilling> {
         existingBilling.updateDefaultCurrency(billingDTO.getDefaultCurrency());
         return BillingDTO.of(existingBilling);
     }
+
+    @Transactional
+    public BillingDTO deleteBilling(Long billingId) {
+        Billing billing = billingRepository.findById(billingId)
+                .orElseThrow(() -> new IllegalArgumentException("Billing not found with id: " + billingId));
+        billingRepository.delete(billing);
+        return BillingDTO.of(billing);
+    }
 }
