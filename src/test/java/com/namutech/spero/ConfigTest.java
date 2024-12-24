@@ -22,6 +22,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -47,6 +49,26 @@ class ConfigTest {
 //        //테스트용 데이터 추가
 //        configRepository.save(Config.builder().configKey("configKey1").configValue("configValue1").configGroup(ConfigGroup.SETTING).configGroupDescription("groupDesc1").build());
 //    }
+
+    @Test
+    @DisplayName("Config 대량 등록 테스트")
+    public void createBulkConfigTest() {
+        // given
+        List<ConfigDTO> configs = IntStream.range(1, 101)
+                .mapToObj(i -> ConfigDTO.builder()
+                        .configKey("configKey" + i)
+                        .configValue("configValue" + i)
+                        .configGroup(ConfigGroup.ETC.name())
+                        .configGroupDescription("groupDesc" + i)
+                        .build()).toList();
+
+        // when
+        configService.createBulkConfig(configs);
+
+        // then
+        List<Config> result = configService.getAllConfigs();
+        assertEquals(120, result.size());
+    }
 
     @Test
     @DisplayName("Config 조회 테스트")

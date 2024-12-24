@@ -10,6 +10,7 @@ import com.namutech.spero.service.external.ExternalApiService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +19,13 @@ import java.util.List;
 @Slf4j
 @Service
 public class ConfigService {
+
+    @Autowired
+    private final JdbcTemplate jdbcTemplate;
+
+    public ConfigService(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
     @Autowired
     private ConfigRepository configRepository;
@@ -59,5 +67,23 @@ public class ConfigService {
             log.info("예외발생 : {}", e.getMessage());
             throw e;
         }
+    }
+
+    /**
+     * Bulk Insert 예제
+     *
+     */
+    @Transactional
+    public void createBulkConfig(List<ConfigDTO> configDTOList) {
+        jdbcTemplate.batchUpdate(
+                "INSERT INTO tbConfig (configKey, configValue, description, configGroup) VALUES (?, ?, ?, ?)",
+                configDTOList,
+                configDTOList.size(),
+                (ps, configDTO) -> {
+                    ps.setString(1, configDTO.getConfigKey());
+                    ps.setString(2, configDTO.getConfigValue());
+                    ps.setString(3, configDTO.getDescription());
+                    ps.setString(4, configDTO.getConfigGroup());
+                });
     }
 }

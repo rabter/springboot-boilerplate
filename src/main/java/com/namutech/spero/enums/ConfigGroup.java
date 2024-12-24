@@ -16,7 +16,8 @@ public enum ConfigGroup {
     LOGEVENT("logEvent", "로그/이벤트 데이터 관리"),
     OSFLAVOR("osFlavor", "Flavor/Image 업데이트 주기"),
     COCKTAIL("cocktail", "cocktail 링크"),
-    ONPREMISE("onPremise", "온프레미스 수집 주기");
+    ONPREMISE("onPremise", "온프레미스 수집 주기"),
+    ETC("etc", "기타");
 
     private final String name;
     private final String description;
