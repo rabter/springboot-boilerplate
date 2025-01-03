@@ -22,6 +22,9 @@ logging:
   level:
     org.hibernate.SQL: DEBUG
     org.hibernate.orm.jdbc.bind: trace
+
+spero:
+  default-port: 8080
 #  file:
 #    name: ./log/application.log
 #  pattern:

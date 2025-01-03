@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -44,11 +44,20 @@ class ConfigTest {
     @Autowired
     private JPAQueryFactory jpaQueryFactory;
 
+    @Value("${spero.default-port}")
+    private String defaultPort;
+
 //    @BeforeEach
 //    public void setUp() {
 //        //테스트용 데이터 추가
 //        configRepository.save(Config.builder().configKey("configKey1").configValue("configValue1").configGroup(ConfigGroup.SETTING).configGroupDescription("groupDesc1").build());
 //    }
+
+    @Test
+    @DisplayName("@Value 어노테이션을 이용한 프로퍼티 값 주입 테스트")
+    public void valueAnnotationTest() {
+        log.info("defaultPort: {}", defaultPort);
+    }
 
     @Test
     @DisplayName("Config 대량 등록 테스트")
