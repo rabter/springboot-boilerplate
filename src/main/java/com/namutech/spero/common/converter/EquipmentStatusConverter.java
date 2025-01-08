@@ -14,6 +14,6 @@ public class EquipmentStatusConverter implements AttributeConverter<EquipmentSta
 
     @Override
     public EquipmentStatus convertToEntityAttribute(String dbData) {
-        return EquipmentStatus.ofValue(dbData);
+        return EquipmentStatus.fromValue(dbData);
     }
 }

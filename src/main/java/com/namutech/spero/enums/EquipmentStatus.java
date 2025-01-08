@@ -18,14 +18,14 @@ public enum EquipmentStatus {
         this.valueNum = valueNum;
     }
 
-    public static EquipmentStatus ofValue(String value) {
+    public static EquipmentStatus fromValue(String value) {
         return Arrays.stream(EquipmentStatus.values())
                 .filter(v -> v.getValue().equals(value))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 값입니다."));
     }
 
-    public static EquipmentStatus ofValueNum(int valueNum) {
+    public static EquipmentStatus fromValueNum(int valueNum) {
         return Arrays.stream(EquipmentStatus.values())
                 .filter(v -> v.getValueNum() == valueNum)
                 .findAny()
