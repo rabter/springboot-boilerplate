@@ -1,6 +1,7 @@
 package com.namutech.spero;
 
 import com.namutech.spero.common.config.RestTemplateConfig;
+import com.namutech.spero.dto.EquipmentUpdateRequestDTO;
 import com.namutech.spero.entity.Equipment;
 import com.namutech.spero.service.EquipmentService;
 import lombok.extern.slf4j.Slf4j;
@@ -9,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
+import org.springframework.test.annotation.Commit;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,6 +47,20 @@ public class EquipmentTest {
 
         assertEquals(9, equipmentList.size());
     }
+
+    @Test
+    @DisplayName("Equipment 상태 업데이트")
+    public void updateEquipmentStatus() {
+        Long equipmentId = 22L;
+        EquipmentUpdateRequestDTO equipmentUpdateRequestDTO = EquipmentUpdateRequestDTO.builder()
+                .status("ERROR")
+                .build();
+        EquipmentUpdateRequestDTO equipment = equipmentService.updateEquipmentStatus(equipmentId, equipmentUpdateRequestDTO);
+        log.info("equipment: {}", equipment);
+
+        assertEquals("ERROR", equipment.getStatus());
+    }
+
 
     @Test
     @DisplayName("Stream() 테스트")
