@@ -6,8 +6,6 @@ import com.namutech.spero.dto.BillingSearchConditionDTO;
 import com.namutech.spero.entity.Billing;
 import com.namutech.spero.entity.QBilling;
 import com.namutech.spero.repository.BillingRepository;
-import com.querydsl.core.types.dsl.BooleanExpression;
-import com.querydsl.core.types.dsl.Expressions;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -27,24 +24,10 @@ public class BillingService extends GenericService<Billing, QBilling> {
     @Autowired
     private BillingRepository billingRepository;
 
-    private BooleanExpression buildPredicate(QBilling qBilling, BillingSearchConditionDTO condition) {
-        BooleanExpression predicate = Expressions.TRUE;
 
-        if(Objects.nonNull(condition.getCspType())) {
-            predicate = addCondition(predicate, qBilling.cspType.eq(condition.getCspType()));
-        }
-        if(Objects.nonNull(condition.getBillingDate())) {
-            predicate = addCondition(predicate, qBilling.billingDate.eq(condition.getBillingDate()));
-        }
-        if(Objects.nonNull(condition.getDefaultCurrency())) {
-            predicate = addCondition(predicate, qBilling.defaultCurrency.eq(condition.getDefaultCurrency()));
-        }
-
-        return predicate;
-    }
     public Page<Billing> getAllBillingSearch(BillingSearchConditionDTO condition) {
         Pageable pageable = PageRequest.of(condition.getPageNumber() - 1, condition.getPageSize());
-        return super.findAll(pageable, QBilling.billing, q -> buildPredicate(q, condition));
+        return findAll(pageable, QBilling.billing, q -> buildPredicate(QBilling.billing, condition));
     }
     public Page<BillingDTO> getPagedBillings(int page, int size) {
         return billingRepository.findAllByOrderByBillingIdDesc(PageRequest.of(page, size))
