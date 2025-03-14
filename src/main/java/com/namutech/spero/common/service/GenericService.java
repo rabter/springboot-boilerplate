@@ -26,7 +26,7 @@ public abstract class GenericService<T, Q extends EntityPath<T>> {
     @Autowired
     private JPAQueryFactory queryFactory;
 
-    public <T> BooleanBuilder buildPredicate(Path<T> qEntity, Object condition) {
+    public BooleanBuilder buildPredicate(Path<T> qEntity, Object condition) {
         BooleanBuilder builder = new BooleanBuilder();
 
         Field[] fields = condition.getClass().getDeclaredFields();
