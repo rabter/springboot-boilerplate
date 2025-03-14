@@ -3,7 +3,6 @@ package com.namutech.spero.common.service;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.EntityPath;
 import com.querydsl.core.types.Path;
-import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.PathBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -66,12 +65,5 @@ public abstract class GenericService<T, Q extends EntityPath<T>> {
 
         long total = totalCount != null ? totalCount : 0L;
         return new PageImpl<>(results, pageable, total);
-    }
-
-    protected BooleanExpression addCondition(BooleanExpression base, BooleanExpression condition) {
-        if (condition == null) {
-            return base;
-        }
-        return base.and(condition);
     }
 }
