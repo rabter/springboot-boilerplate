@@ -1,5 +1,6 @@
 package com.namutech.spero.common.service;
 
+import com.namutech.spero.common.dto.BaseSearchDTO;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.EntityPath;
 import com.querydsl.core.types.Path;
@@ -10,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +22,7 @@ import java.util.function.Function;
 
 @Slf4j
 @Service
-public abstract class GenericService<T, Q extends EntityPath<T>> {
+public abstract class GenericService<T, Q extends EntityPath<T>, C extends BaseSearchDTO> {
 
     @Autowired
     private JPAQueryFactory queryFactory;
@@ -49,7 +51,13 @@ public abstract class GenericService<T, Q extends EntityPath<T>> {
         return builder;
     }
 
-    public Page<T> findAll(Pageable pageable, Q qClass, Function<Q, BooleanBuilder> predicateBuilder) {
+    public Pageable getPageable(C condition) {
+        return PageRequest.of(condition.getPageNumber() - 1, condition.getPageSize());
+    }
+
+    public Page<T> findAll(C condition, Q qClass, Function<Q, BooleanBuilder> predicateBuilder) {
+        Pageable pageable = getPageable(condition);
+
         List<T> results = queryFactory
                 .selectFrom(qClass)
                 .where(predicateBuilder.apply(qClass))

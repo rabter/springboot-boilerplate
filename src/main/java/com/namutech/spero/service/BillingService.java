@@ -19,16 +19,16 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Service
-public class BillingService extends GenericService<Billing, QBilling> {
+public class BillingService extends GenericService<Billing, QBilling, BillingSearchConditionDTO> {
 
     @Autowired
     private BillingRepository billingRepository;
 
 
     public Page<Billing> getAllBillingSearch(BillingSearchConditionDTO condition) {
-        Pageable pageable = PageRequest.of(condition.getPageNumber() - 1, condition.getPageSize());
-        return findAll(pageable, QBilling.billing, q -> buildPredicate(QBilling.billing, condition));
+        return findAll(condition, QBilling.billing, q -> buildPredicate(QBilling.billing, condition));
     }
+
     public Page<BillingDTO> getPagedBillings(int page, int size) {
         return billingRepository.findAllByOrderByBillingIdDesc(PageRequest.of(page, size))
                 .map(BillingDTO::of);
