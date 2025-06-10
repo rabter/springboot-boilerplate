@@ -1,16 +1,18 @@
 package com.namutech.spero.service;
 
 import com.namutech.spero.common.service.GenericService;
+import com.namutech.spero.common.util.PredicateBuilderHelper;
 import com.namutech.spero.dto.BillingDTO;
 import com.namutech.spero.dto.BillingSearchConditionDTO;
 import com.namutech.spero.entity.Billing;
 import com.namutech.spero.entity.QBilling;
 import com.namutech.spero.repository.BillingRepository;
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.dsl.PathBuilder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,7 +28,7 @@ public class BillingService extends GenericService<Billing, QBilling, BillingSea
 
 
     public Page<Billing> getAllBillingSearch(BillingSearchConditionDTO condition) {
-        return findAll(condition, QBilling.billing, q -> buildPredicate(QBilling.billing, condition));
+        return findAll(condition, QBilling.billing, q -> buildPredicate(condition));
     }
 
     public Page<BillingDTO> getPagedBillings(int page, int size) {
@@ -70,5 +72,20 @@ public class BillingService extends GenericService<Billing, QBilling, BillingSea
                 .orElseThrow(() -> new IllegalArgumentException("Billing not found with id: " + billingId));
         billingRepository.delete(billing);
         return BillingDTO.of(billing);
+    }
+
+    @Override
+    protected PathBuilder<Billing> getPathBuilder() {
+        return new PathBuilder<>(Billing.class, "billing");
+    }
+
+    @Override
+    protected BooleanBuilder buildPredicate(BillingSearchConditionDTO condition) {
+        PathBuilder<Billing> path = getPathBuilder();
+        BooleanBuilder builder = new BooleanBuilder();
+
+        builder.and(PredicateBuilderHelper.eq(path, "cspType", condition.getCspType()));
+        builder.and(PredicateBuilderHelper.like(path, "defaultCurrency", condition.getDefaultCurrency()));
+        return builder;
     }
 }

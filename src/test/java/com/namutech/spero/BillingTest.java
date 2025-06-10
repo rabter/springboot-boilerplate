@@ -36,8 +36,8 @@ public class BillingTest {
     public void findAll() {
         BillingSearchConditionDTO condition = BillingSearchConditionDTO.builder()
                 .cspType("aws")
-                .defaultCurrency("USD")
-                .billingDate("202501")
+                .defaultCurrency("U")
+//                .billingDate("202501")
                 .pageNumber(1)
                 .pageSize(3)
                 .build();

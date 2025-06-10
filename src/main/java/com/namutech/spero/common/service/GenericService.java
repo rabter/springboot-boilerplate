@@ -27,29 +27,8 @@ public abstract class GenericService<T, Q extends EntityPath<T>, C extends BaseS
     @Autowired
     private JPAQueryFactory queryFactory;
 
-    public BooleanBuilder buildPredicate(Path<T> qEntity, Object condition) {
-        BooleanBuilder builder = new BooleanBuilder();
-
-        Field[] fields = condition.getClass().getDeclaredFields();
-
-        for (Field field : fields) {
-            field.setAccessible(true);
-            try {
-                Object value = field.get(condition);
-
-                if (Objects.nonNull(value)) {
-                    PathBuilder<T> path = new PathBuilder<>(qEntity.getType(), qEntity.getMetadata());
-                    builder.and(path.get(field.getName()).eq(value));
-                }
-            } catch (IllegalAccessException e) {
-                throw new IllegalArgumentException("IllegalArgumentException");
-            } finally {
-                field.setAccessible(false);
-            }
-        }
-
-        return builder;
-    }
+    protected abstract PathBuilder<T> getPathBuilder();
+    protected abstract BooleanBuilder buildPredicate(C condition);
 
     public Pageable getPageable(C condition) {
         return PageRequest.of(condition.getPageNumber() - 1, condition.getPageSize());
