@@ -9,6 +9,7 @@ import com.namutech.spero.entity.QBilling;
 import com.namutech.spero.repository.BillingRepository;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.PathBuilder;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,10 +22,10 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class BillingService extends GenericService<Billing, QBilling, BillingSearchConditionDTO> {
 
-    @Autowired
-    private BillingRepository billingRepository;
+    private final BillingRepository billingRepository;
 
 
     public Page<Billing> getAllBillingSearch(BillingSearchConditionDTO condition) {

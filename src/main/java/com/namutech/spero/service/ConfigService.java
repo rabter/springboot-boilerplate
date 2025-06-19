@@ -7,6 +7,7 @@ import com.namutech.spero.enums.ConfigGroup;
 import com.namutech.spero.repository.ConfigRepository;
 import com.namutech.spero.repository.ConfigRepositoryCustom;
 import com.namutech.spero.service.external.ExternalApiService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,23 +19,16 @@ import java.util.List;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class ConfigService {
 
-    @Autowired
     private final JdbcTemplate jdbcTemplate;
 
-    public ConfigService(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
+    private final ConfigRepository configRepository;
 
-    @Autowired
-    private ConfigRepository configRepository;
+    private final ConfigRepositoryCustom configRepositoryCustom;
 
-    @Autowired
-    private ConfigRepositoryCustom configRepositoryCustom;
-
-    @Autowired
-    private ExternalApiService externalApiService;
+    private final ExternalApiService externalApiService;
 
     public List<Config> getAllConfigs() {
         return configRepository.findAll();
