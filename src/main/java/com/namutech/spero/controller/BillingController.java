@@ -12,7 +12,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -37,11 +42,18 @@ public class BillingController {
     }
 
     @GetMapping
-    public ResponseEntity<ApiResponse<?>> getAllBillings(@RequestParam(defaultValue = "0") int page,
+    public ResponseEntity<ApiResponse<?>> getAllBillings(Authentication authentication, @RequestParam(defaultValue = "0") int page,
                                                          @RequestParam(defaultValue = "5") int size) {
 
-        Page<BillingDTO> pagedResult = billingService.getPagedBillings(page, size);
+        if (authentication != null && authentication.getPrincipal() instanceof Jwt jwt) {
+            log.info("sub: {}", jwt.getSubject());
+            log.info("email: {}", jwt.getClaimAsString("email"));
+            log.info("username: {}", jwt.getClaimAsString("preferred_username"));
+        } else {
+            log.warn("JWT principal not found or not instance of Jwt");
+        }
 
+        Page<BillingDTO> pagedResult = billingService.getPagedBillings(page, size);
         PagingInfoDTO pagingInfo = PagingUtil.buildPagingInfo(pagedResult);
         return ResponseEntity.ok(new ApiResponse<>(true, pagedResult.getContent(), pagingInfo));
     }

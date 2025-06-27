@@ -7,9 +7,9 @@ import java.util.Arrays;
 
 @Getter
 public enum ConfigGroup {
-    SYSTEM_PERFORMANCE("systemPerformance", "성능 데이터"),
+    SYSTEM_PERFORMANCE("system-performance", "성능 데이터"),
     RETENTION("retention", "통계 데이터 보관 주기"),
-    HEALTH_CHECK("healthCheck", "헬스 체크"),
+    HEALTH_CHECK("health-check", "헬스 체크"),
     METERING("metering", "미터링 데이터"),
     INFLUXDB("influxDB", "influxDB 설정값"),
     STAT("stat", "라이프사이클 통계 데이터 보관 주기"),
@@ -17,6 +17,8 @@ public enum ConfigGroup {
     OSFLAVOR("osFlavor", "Flavor/Image 업데이트 주기"),
     COCKTAIL("cocktail", "cocktail 링크"),
     ONPREMISE("onPremise", "온프레미스 수집 주기"),
+    INSTANCE_PROVISIONING("instanceProvisioning", "인스턴스 프로비저닝"),
+    SERVICE_REQUEST("serviceRequest", "서비스 요청"),
     ETC("etc", "기타");
 
     private final String name;

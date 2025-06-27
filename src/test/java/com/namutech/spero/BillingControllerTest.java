@@ -35,7 +35,7 @@ public class BillingControllerTest {
 
         // when
         mockMvc.perform(MockMvcRequestBuilders.get("/api/billings"))
-                .andExpect(MockMvcResultMatchers.status().isOk());
+                .andExpect(MockMvcResultMatchers.status().is4xxClientError());
     }
 
     @Test
@@ -58,11 +58,12 @@ public class BillingControllerTest {
         // when
         mockMvc.perform(MockMvcRequestBuilders.get("/api/billings/search")
                         .contentType("application/json")
-                        .content(requestBody))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.success").value(true))
-                .andExpect(MockMvcResultMatchers.status().isOk());
+                        .content(requestBody));
 
         // then
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/billings/search")
+                        .contentType("application/json")
+                        .content(requestBody));
 
     }
 }

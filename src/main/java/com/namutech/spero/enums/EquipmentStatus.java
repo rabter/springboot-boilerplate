@@ -8,6 +8,8 @@ import java.util.Arrays;
 public enum EquipmentStatus {
     ACTIVE("active", 1),
     INACTIVE("inactive", 0),
+    READY("ready", 2),
+    WARN("warn", 3),
     ERROR("error", 999);
 
     private final String value;

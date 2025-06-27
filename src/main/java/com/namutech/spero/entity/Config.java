@@ -1,5 +1,6 @@
 package com.namutech.spero.entity;
 
+import com.namutech.spero.common.converter.ConfigGroupConverter;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -24,7 +25,8 @@ public class Config {
     private String configValue;
     private String description;
 
-    @Enumerated(EnumType.STRING)
+//    @Enumerated(EnumType.STRING)
+    @Convert(converter = ConfigGroupConverter.class)
     private ConfigGroup configGroup;
 
     private String configGroupDescription;

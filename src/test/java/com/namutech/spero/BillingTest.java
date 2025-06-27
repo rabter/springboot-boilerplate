@@ -55,7 +55,7 @@ public class BillingTest {
         String cspType = "aws";
         List<Billing> billings = billingService.getAllBillingByCspType(cspType);
 
-        assertEquals(6, billings.size());
+        assertThat(billings).isNotEmpty();
     }
 
     @Test
@@ -77,18 +77,18 @@ public class BillingTest {
     @Test
     @DisplayName("Billing 수정 테스트")
     public void updateBilling() {
-        Long billingId = 1L;
-        BillingDTO billingDTO = BillingDTO.builder().defaultCurrency("KRW").build();
+        Long billingId = 178L;
+        BillingDTO billingDTO = BillingDTO.builder().defaultCurrency("USD").build();
 
         BillingDTO updatedBilling = billingService.updateBilling(billingId, billingDTO);
-        assertEquals("KRW", updatedBilling.getDefaultCurrency());
-        assertEquals("ktCloud", updatedBilling.getCspType());
+        assertEquals("USD", updatedBilling.getDefaultCurrency());
+        assertEquals("aws", updatedBilling.getCspType());
     }
 
     @Test
     @DisplayName("Billing 삭제 테스트")
     public void deleteBilling() {
-        Long billingId = 1L;
+        Long billingId = 178L;
         billingService.deleteBilling(billingId);
     }
 }

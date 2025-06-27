@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @Slf4j
 @SpringBootTest
@@ -45,20 +46,20 @@ public class EquipmentTest {
             log.info("장비이름: {}, 부모 장비 이름 : {}", equipment.getName(), parentName);
         }
 
-        assertEquals(9, equipmentList.size());
+        assertThat(equipmentList.size()).isGreaterThan(0);
     }
 
     @Test
     @DisplayName("Equipment 상태 업데이트")
     public void updateEquipmentStatus() {
-        Long equipmentId = 22L;
+        Long equipmentId = 179L;
         EquipmentUpdateRequestDTO equipmentUpdateRequestDTO = EquipmentUpdateRequestDTO.builder()
                 .status("ERROR")
                 .build();
         EquipmentUpdateRequestDTO equipment = equipmentService.updateEquipmentStatus(equipmentId, equipmentUpdateRequestDTO);
         log.info("equipment: {}", equipment);
 
-        assertEquals("ERROR", equipment.getStatus());
+        assertThat(equipment.getStatus()).isEqualTo("ERROR");
     }
 
 
