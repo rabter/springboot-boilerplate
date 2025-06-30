@@ -2,11 +2,13 @@ package com.namutech.spero.kafka.consumer;
 
 import com.namutech.spero.kafka.event.UserCreatedEvent;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Profile;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
 @Service
 @Slf4j
+@Profile("kafka") // 'kafka' 프로파일에서만 활성화
 public class UserEventConsumer {
 
     @KafkaListener(

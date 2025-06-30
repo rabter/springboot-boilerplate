@@ -3,12 +3,14 @@ package com.namutech.spero.kafka.producer;
 import com.namutech.spero.kafka.event.UserCreatedEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Profile;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@Profile("kafka") // 'kafka' 프로파일에서만 활성화
 public class UserEventProducer {
     private final KafkaTemplate<String, Object> kafkaTemplate;
 

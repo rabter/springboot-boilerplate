@@ -67,23 +67,22 @@ public class SecurityConfig {
         http
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/**").authenticated()
-                        //.requestMatchers("/api/**").permitAll()
+                        //.requestMatchers("/api/**").authenticated()
+                        .requestMatchers("/api/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
         return http.build();
     }
 
-    @Profile("dev")
+    @Profile({"dev", "kafka"})
     @Bean
     public SecurityFilterChain devFilterChain(HttpSecurity http) throws Exception {
         http
                 .cors(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable) // CSRF 비활성화 (개발 환경에서만 사용)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/**").permitAll()
-                        .requestMatchers("/kafka/**").permitAll()
+                        .requestMatchers("/api/**", "/kafka/**").permitAll()
                         .anyRequest().permitAll()
                 );
 //                .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
