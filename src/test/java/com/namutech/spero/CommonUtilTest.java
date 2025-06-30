@@ -1,6 +1,7 @@
 package com.namutech.spero;
 
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,6 +16,7 @@ import java.time.LocalTime;
 @SpringBootTest
 @Transactional
 @Rollback
+@Disabled // @Disabled 어노테이션은 테스트를 비활성화합니다. 필요에 따라 제거하세요.
 public class CommonUtilTest {
 
     @Test

@@ -12,9 +12,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.core.env.Environment;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -28,8 +30,11 @@ import java.security.cert.X509Certificate;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Value("${spero.security.jwk-url}")
-    private String jwkUrl;
+    private final Environment env;
+
+    public SecurityConfig(Environment env) {
+        this.env = env;
+    }
 
     static {
         // 개발 환경에서만 호출
@@ -75,17 +80,21 @@ public class SecurityConfig {
     public SecurityFilterChain devFilterChain(HttpSecurity http) throws Exception {
         http
                 .cors(Customizer.withDefaults())
+                .csrf(AbstractHttpConfigurer::disable) // CSRF 비활성화 (개발 환경에서만 사용)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/**").permitAll()
+                        .requestMatchers("/kafka/**").permitAll()
                         .anyRequest().permitAll()
-                )
-                .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
+                );
+//                .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
         return http.build();
     }
 
+    @Profile("sso")
     @Bean
     public JwtDecoder jwtDecoder() throws Exception {
-        URL jwkUrl = new URL(this.jwkUrl);
+        String securityJwkUrl = env.getProperty("spero.security.jwk-url", "");
+        URL jwkUrl = new URL(securityJwkUrl);
         var retriever = new DefaultResourceRetriever(2000, 2000);
 
         JWKSource<SecurityContext> jwkSource = JWKSourceBuilder

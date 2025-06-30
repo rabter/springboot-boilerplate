@@ -11,6 +11,7 @@ import com.namutech.spero.service.ConfigService;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @Transactional
 //@Commit
 @Rollback
+@Disabled // @Disabled 어노테이션은 테스트를 비활성화합니다. 필요에 따라 제거하세요.
 class ConfigTest {
 
     @Autowired

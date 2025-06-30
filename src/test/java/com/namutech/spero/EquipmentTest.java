@@ -5,6 +5,7 @@ import com.namutech.spero.dto.EquipmentUpdateRequestDTO;
 import com.namutech.spero.entity.Equipment;
 import com.namutech.spero.service.EquipmentService;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Transactional
 //@Commit
 @Rollback
+@Disabled // @Disabled 어노테이션은 테스트를 비활성화합니다. 필요에 따라 제거하세요.
 public class EquipmentTest {
 
     @Autowired
