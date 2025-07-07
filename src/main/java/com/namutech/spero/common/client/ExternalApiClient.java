@@ -23,6 +23,13 @@ public class ExternalApiClient {
                 .map(BillingListResponseDTO::getData);
     }
 
+    public Mono<String> getBillingDataAsString() {
+        return webClient.get()
+                .uri("/api/billings")
+                .retrieve()
+                .bodyToMono(String.class);
+    }
+
     public Mono<List<BillingDTO>> searchBillings(String query) {
         return webClient.get()
                 .uri(uriBuilder -> uriBuilder.path("/api/billings/search")

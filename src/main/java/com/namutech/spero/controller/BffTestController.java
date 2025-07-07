@@ -6,6 +6,8 @@ import com.namutech.spero.common.client.dto.DashboardDTO;
 import com.namutech.spero.dto.BillingDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,10 +29,11 @@ public class BffTestController {
      * @return ResponseEntity<ApiResponse<?>> 응답 객체
      */
     @GetMapping("/bff/proxy")
-    public Mono<ResponseEntity<ApiResponse<?>>> getBillingData() {
-        return externalApiClient.getBillingData()
-                .map(billingList -> ResponseEntity.ok(
-                        new ApiResponse<>(true, billingList, null)));
+    public Mono<ResponseEntity<String>> getBillingData() {
+        return externalApiClient.getBillingDataAsString()
+                .map(json -> ResponseEntity.ok()
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .body(json));
     }
 
     /**
