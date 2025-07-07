@@ -8,11 +8,11 @@ import org.springframework.web.client.RestTemplate;
 
 @Slf4j
 @Component
-public class RestClient {
+public class RestTemplateClient {
 
     private final RestTemplate restTemplate;
 
-    public RestClient(RestTemplate restTemplate) {
+    public RestTemplateClient(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
 

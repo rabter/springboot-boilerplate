@@ -1,7 +1,9 @@
 package com.namutech.spero.controller;
 
 import com.namutech.spero.common.ApiResponse;
-import com.namutech.spero.common.client.ExternalApiClient;
+import com.namutech.spero.common.client.AsyncExternalApiClient;
+import com.namutech.spero.common.client.SyncExternalApiClient;
+import com.namutech.spero.common.client.dto.BillingListResponseDTO;
 import com.namutech.spero.common.client.dto.DashboardDTO;
 import com.namutech.spero.dto.BillingDTO;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +12,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
@@ -18,22 +21,35 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/bff/proxy")
 public class BffTestController {
 
-    private final ExternalApiClient externalApiClient;
+    private final AsyncExternalApiClient asyncExternalApiClient;
+    private final SyncExternalApiClient syncExternalApiClient;
 
     /**
-     * BFF (Backend for Frontend) 테스트용 API
+     * BFF (Backend for Frontend) 테스트용 API (비동기 방식)
      * 외부 API를 호출하여 데이터를 가져오는 예시
      * 이 API는 서브시스템의 결과를 그대로 프록시하여 반환합니다.
      * @return ResponseEntity<ApiResponse<?>> 응답 객체
      */
-    @GetMapping("/bff/proxy")
-    public Mono<ResponseEntity<String>> getBillingData() {
-        return externalApiClient.getBillingDataAsString()
+    @GetMapping("/async")
+    public Mono<ResponseEntity<String>> getBillingDataAsync() {
+        return asyncExternalApiClient.getBillingDataAsString()
                 .map(json -> ResponseEntity.ok()
                         .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                         .body(json));
+    }
+
+    /**
+     * BFF (Backend for Frontend) 테스트용 API (동기 방식)
+     * 외부 API를 호출하여 데이터를 가져오는 예시
+     * 이 API는 서브시스템의 결과를 그대로 프록시하여 반환합니다.
+     * @return ResponseEntity<ApiResponse<?>> 응답 객체
+     */
+    @GetMapping("/sync")
+    public ApiResponse<List<BillingDTO>> getBillingDataSync() {
+       return syncExternalApiClient.getBillingData();
     }
 
     /**
@@ -42,9 +58,9 @@ public class BffTestController {
      * 이 API는 여러 서브시스템의 결과를 통합하여 반환합니다.
      * @return ResponseEntity<ApiResponse<?>> 응답 객체
      */
-    @GetMapping("/bff/aggregate")
+    @GetMapping("/aggregate")
     public Mono<DashboardDTO> getDashboardData() {
-        Mono<List<BillingDTO>> billingDataMono = externalApiClient.getBillingData();
+        Mono<List<BillingDTO>> billingDataMono = asyncExternalApiClient.getBillingData();
 
         return Mono.zip(billingDataMono, billingDataMono)
                 .map(tuple -> {

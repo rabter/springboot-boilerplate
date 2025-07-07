@@ -11,7 +11,7 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class ExternalApiClient {
+public class AsyncExternalApiClient {
 
     private final WebClient webClient;
 
