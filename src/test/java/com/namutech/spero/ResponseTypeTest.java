@@ -7,6 +7,7 @@ import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -39,6 +40,7 @@ public class ResponseTypeTest {
     }
 
     @Test
+    @DisplayName("JSON String Response Test")
     void jsonStringTest() throws Exception {
         // 더미 JSON 응답 정의
         String dummyJSON = """
