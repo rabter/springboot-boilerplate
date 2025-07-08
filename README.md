@@ -1,5 +1,5 @@
-# springboot-boilerplate
-springboot boilerplate
+# springboot-boilerplate project
+springboot boilerplate project
 
 ## 구동방식
 ### 1. dev 환경
