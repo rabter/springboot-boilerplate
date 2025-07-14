@@ -11,9 +11,13 @@ import lombok.NoArgsConstructor;
 public class InstanceCreateResultResponseDTO {
 
     private String instanceId;
+    private String cloudId;
+    private String region;
 
     @Builder
-    public InstanceCreateResultResponseDTO(String instanceId) {
+    public InstanceCreateResultResponseDTO(String instanceId, String cloudId, String region) {
         this.instanceId = instanceId;
+        this.cloudId = cloudId;
+        this.region = region;
     }
 }
