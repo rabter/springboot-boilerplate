@@ -1,10 +1,12 @@
-package com.namutech.spero.service.adapter.cloud.aws;
+package com.namutech.spero.resource.adapter.cloud.aws;
 
-import com.namutech.spero.common.dto.ResourceContext;
+import com.namutech.spero.dto.InstanceCreateRequestDTO;
+import com.namutech.spero.resource.context.ResourceAttribute;
+import com.namutech.spero.resource.context.ResourceContext;
 import com.namutech.spero.dto.InstanceCreateResultResponseDTO;
 import com.namutech.spero.entity.Cloud;
 import com.namutech.spero.service.CloudService;
-import com.namutech.spero.service.port.ProvisionInstancePort;
+import com.namutech.spero.resource.port.ProvisionInstancePort;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -19,7 +21,7 @@ public class AwsInstanceAdapter implements ProvisionInstancePort {
     private final CloudService cloudService;
 
     @Override
-    public InstanceCreateResultResponseDTO createInstance(ResourceContext context) {
+    public InstanceCreateResultResponseDTO createInstance(ResourceContext<InstanceCreateRequestDTO> context) {
         log.info("Creating AWS instance with request: {}", context);
         // AWS 인스턴스 생성 로직을 여기에 구현합니다.
         Cloud cloud = cloudService.getCloudById(context.getCloud().getCloudId());
@@ -27,7 +29,7 @@ public class AwsInstanceAdapter implements ProvisionInstancePort {
         String instanceType = context.getRequestDto().getInstanceType();
 
         // vendor-specific 로직을 여기에 구현합니다.
-        String region = context.getVendorAttr("region", String.class);
+        String region = context.getVendorAttr(ResourceAttribute.REGION, String.class);
 
         return InstanceCreateResultResponseDTO.builder()
                 .instanceId("aws-instance-id")

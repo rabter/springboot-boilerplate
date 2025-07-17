@@ -1,10 +1,11 @@
-package com.namutech.spero.service.adapter.persistence;
+package com.namutech.spero.resource.adapter.persistence;
 
-import com.namutech.spero.common.dto.ResourceContext;
+import com.namutech.spero.resource.context.ResourceAttribute;
+import com.namutech.spero.resource.context.ResourceContext;
 import com.namutech.spero.dto.InstanceCreateRequestDTO;
 import com.namutech.spero.entity.Cloud;
 import com.namutech.spero.repository.CloudRepository;
-import com.namutech.spero.service.port.ResourceQueryPort;
+import com.namutech.spero.resource.port.ResourceQueryPort;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -20,20 +21,20 @@ public class ResourceQueryAdapter implements ResourceQueryPort {
     private final CloudRepository cloudRepository;
 
     @Override
-    public ResourceContext buildProvisioningContext(String cloudId, InstanceCreateRequestDTO requestDto) {
+    public ResourceContext<InstanceCreateRequestDTO> buildInstanceProvisioningContext(InstanceCreateRequestDTO requestDto) {
+        String cloudId = requestDto.getCloudId();
         Cloud cloud = cloudRepository.findById(cloudId)
                 .orElseThrow(() -> new IllegalArgumentException("Cloud not found with id: " + cloudId));
         log.info("CloudName: {}", cloud.getCloudName());
-        ResourceContext context = ResourceContext.builder()
+        ResourceContext<InstanceCreateRequestDTO> context = ResourceContext.<InstanceCreateRequestDTO>builder()
                 .cloud(cloud)
                 .requestDto(requestDto)
-                .vendorSpecificData(new HashMap<>())
                 .build();
 
         // vendor-specific data 설정
-        context.putVendorAttr("region",
+        context.putVendorAttr(ResourceAttribute.REGION,
                 Optional.ofNullable(requestDto.getVendorSpecificData())
-                        .map(m ->m.get("region"))
+                        .map(m -> m.get(ResourceAttribute.REGION))
                         .orElse(null));
         return context;
     }

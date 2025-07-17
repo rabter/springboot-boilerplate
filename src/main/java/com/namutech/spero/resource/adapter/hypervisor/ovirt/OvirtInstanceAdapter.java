@@ -1,4 +1,4 @@
-package com.namutech.spero.service.adapter.hypervisor.ovirt;
+package com.namutech.spero.resource.adapter.hypervisor.ovirt;
 
 import org.springframework.stereotype.Service;
 

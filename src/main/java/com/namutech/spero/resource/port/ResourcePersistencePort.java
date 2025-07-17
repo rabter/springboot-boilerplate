@@ -1,6 +1,6 @@
-package com.namutech.spero.service.port;
+package com.namutech.spero.resource.port;
 
-import com.namutech.spero.common.dto.ResourceContext;
+import com.namutech.spero.resource.context.ResourceContext;
 import com.namutech.spero.dto.InstanceCreateResultResponseDTO;
 
 public interface ResourcePersistencePort {

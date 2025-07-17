@@ -1,8 +1,8 @@
-package com.namutech.spero.service.adapter.cloud.azure;
+package com.namutech.spero.resource.adapter.cloud.azure;
 
-import com.namutech.spero.common.dto.ResourceContext;
+import com.namutech.spero.resource.context.ResourceContext;
 import com.namutech.spero.dto.InstanceCreateResultResponseDTO;
-import com.namutech.spero.service.port.ProvisionInstancePort;
+import com.namutech.spero.resource.port.ProvisionInstancePort;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

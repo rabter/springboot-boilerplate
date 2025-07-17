@@ -1,6 +1,7 @@
 package com.namutech.spero;
 
 import com.namutech.spero.dto.InstanceCreateRequestDTO;
+import com.namutech.spero.resource.context.ResourceAttribute;
 import com.namutech.spero.service.ResourceManagerService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
@@ -30,14 +31,15 @@ public class HexagonalArchitechtureTest {
         log.info("Hexagonal Architecture Test 실행");
         log.info("AWS 인스턴스 생성 예제");
         InstanceCreateRequestDTO requestDto = InstanceCreateRequestDTO.builder()
+                .cloudId("cloud005-aws-ap-northeast-2")
                 .vendor("aws")
                 .instanceType("t2.micro")
                 .imageId("ami-12345678")
                 .securityGroupId("sg-12345678")
                 .keyPairName("my-key-pair")
-                .vendorSpecificData(Map.of("region", "ap-northeast-2")) // AWS의 경우 지역 정보 추가
+                .vendorSpecificData(Map.of(ResourceAttribute.REGION, "ap-northeast-2")) // AWS의 경우 지역 정보 추가
                 .build();
-         resourceManagerService.createInstance("cloud005-aws-ap-northeast-2", requestDto);
+         resourceManagerService.createInstance(requestDto);
 
 
         // Assertions 등을 사용하여 결과를 검증합니다.
@@ -51,13 +53,14 @@ public class HexagonalArchitechtureTest {
 
         log.info("Azure 인스턴스 생성 예제");
         InstanceCreateRequestDTO requestDto = InstanceCreateRequestDTO.builder()
+                .cloudId("cloud2029-azure-test")
                 .vendor("azure")
                 .instanceType("Standard_B1s")
                 .imageId("Canonical:UbuntuServer:18.04-LTS:latest")
                 .securityGroupId("my-security-group")
                 .keyPairName("my-azure-key-pair")
                 .build();
-         resourceManagerService.createInstance("cloud2029-azure-test", requestDto);
+         resourceManagerService.createInstance(requestDto);
 
         // Assertions 등을 사용하여 결과를 검증합니다.
     }

@@ -1,8 +1,8 @@
-package com.namutech.spero.service.adapter.persistence;
+package com.namutech.spero.resource.adapter.persistence;
 
-import com.namutech.spero.common.dto.ResourceContext;
+import com.namutech.spero.resource.context.ResourceContext;
 import com.namutech.spero.dto.InstanceCreateResultResponseDTO;
-import com.namutech.spero.service.port.ResourcePersistencePort;
+import com.namutech.spero.resource.port.ResourcePersistencePort;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

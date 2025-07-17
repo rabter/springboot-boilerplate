@@ -1,7 +1,7 @@
-package com.namutech.spero.service.router;
+package com.namutech.spero.resource.router;
 
-import com.namutech.spero.service.port.ProvisionInstancePort;
-import com.namutech.spero.service.port.ProvisionSubnetPort;
+import com.namutech.spero.resource.port.ProvisionInstancePort;
+import com.namutech.spero.resource.port.ProvisionSubnetPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

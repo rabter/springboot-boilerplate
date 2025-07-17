@@ -1,4 +1,4 @@
-package com.namutech.spero.service.port;
+package com.namutech.spero.resource.port;
 
 import com.namutech.spero.dto.SubnetCreateRequestDTO;
 

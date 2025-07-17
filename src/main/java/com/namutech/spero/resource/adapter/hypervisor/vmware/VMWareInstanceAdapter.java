@@ -1,4 +1,4 @@
-package com.namutech.spero.service.adapter.hypervisor.vmware;
+package com.namutech.spero.resource.adapter.hypervisor.vmware;
 
 import org.springframework.stereotype.Service;
 
