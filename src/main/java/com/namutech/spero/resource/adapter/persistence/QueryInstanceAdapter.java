@@ -5,18 +5,17 @@ import com.namutech.spero.resource.context.ResourceContext;
 import com.namutech.spero.dto.InstanceCreateRequestDTO;
 import com.namutech.spero.entity.Cloud;
 import com.namutech.spero.repository.CloudRepository;
-import com.namutech.spero.resource.port.ResourceQueryPort;
+import com.namutech.spero.resource.port.QueryInstancePort;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
 import java.util.Optional;
 
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class ResourceQueryAdapter implements ResourceQueryPort {
+public class QueryInstanceAdapter implements QueryInstancePort {
 
     private final CloudRepository cloudRepository;
 

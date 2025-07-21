@@ -4,8 +4,8 @@ import com.namutech.spero.resource.context.ResourceContext;
 import com.namutech.spero.dto.InstanceCreateRequestDTO;
 import com.namutech.spero.dto.InstanceCreateResultResponseDTO;
 import com.namutech.spero.resource.port.ProvisionInstancePort;
-import com.namutech.spero.resource.port.ResourcePersistencePort;
-import com.namutech.spero.resource.port.ResourceQueryPort;
+import com.namutech.spero.resource.port.PersistenceInstancePort;
+import com.namutech.spero.resource.port.QueryInstancePort;
 import com.namutech.spero.resource.router.ProvisionPortRouter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,17 +16,18 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class ResourceManagerService {
-    // 고수준 모듈(ResourceManagerService)에서 저수준 모듈(VMWareInstanceService, AzureInstanceService, OvirtInstanceService)을 사용합니다.
-    // 고수준 모듈은 저수준 모듈에 의존하지 않고, 인터페이스를 통해 의존성을 역전시킵니다.(Dependency Inversion Principle)
+    /**
+     * USECASE : 인스턴스 생성
+     */
 
-    private final ResourceQueryPort resourceQueryPort;
+    private final QueryInstancePort queryInstancePort;
     private final ProvisionPortRouter provisionPortRouter;
-    private final ResourcePersistencePort resourcePersistencePort;
+    private final PersistenceInstancePort persistenceInstancePort;
 
     @Transactional
     public void createInstance(InstanceCreateRequestDTO requestDto) {
         // DB 조회 및 context 생성(queryPort로 캡슐화)
-        ResourceContext<InstanceCreateRequestDTO> context = resourceQueryPort.buildInstanceProvisioningContext(requestDto);
+        ResourceContext<InstanceCreateRequestDTO> context = queryInstancePort.buildInstanceProvisioningContext(requestDto);
         log.info("DB 조회");
 
         // CSP 인스턴스 생성
@@ -35,7 +36,7 @@ public class ResourceManagerService {
         log.info("Instance 생성 완료: {}", result.getInstanceId());
 
         // DB 저장
-        resourcePersistencePort.saveInstanceWithResources(result, context);
+        persistenceInstancePort.saveInstanceWithResources(result, context);
         log.info("Instance와 리소스 정보 저장 완료: {}", result.getInstanceId());
     }
 

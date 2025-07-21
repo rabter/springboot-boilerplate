@@ -1,7 +1,7 @@
 package com.namutech.spero.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.namutech.spero.common.dto.ResourceRequest;
+import com.namutech.spero.resource.common.request.ResourceRequest;
 import com.namutech.spero.resource.context.ResourceAttribute;
 import lombok.Builder;
 import lombok.Getter;

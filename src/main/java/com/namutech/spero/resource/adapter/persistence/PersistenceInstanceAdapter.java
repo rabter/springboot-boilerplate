@@ -1,16 +1,17 @@
 package com.namutech.spero.resource.adapter.persistence;
 
+import com.namutech.spero.dto.InstanceCreateRequestDTO;
 import com.namutech.spero.resource.context.ResourceContext;
 import com.namutech.spero.dto.InstanceCreateResultResponseDTO;
-import com.namutech.spero.resource.port.ResourcePersistencePort;
+import com.namutech.spero.resource.port.PersistenceInstancePort;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
-public class ResourcePersistenceAdapter implements ResourcePersistencePort {
+public class PersistenceInstanceAdapter implements PersistenceInstancePort {
     @Override
-    public void saveInstanceWithResources(InstanceCreateResultResponseDTO result, ResourceContext context) {
+    public void saveInstanceWithResources(InstanceCreateResultResponseDTO result, ResourceContext<InstanceCreateRequestDTO> context) {
         // 1. DB에 인스턴스 저장
         log.info("Saving instance with ID: {}", result.getInstanceId());
 

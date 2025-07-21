@@ -1,6 +1,6 @@
 package com.namutech.spero.resource.context;
 
-import com.namutech.spero.common.dto.ResourceRequest;
+import com.namutech.spero.resource.common.request.ResourceRequest;
 import com.namutech.spero.entity.Cloud;
 import lombok.Builder;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package com.namutech.spero.common.dto;
+package com.namutech.spero.resource.common.request;
 
 public interface ResourceRequest {
     String getCloudId();
