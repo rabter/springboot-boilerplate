@@ -11,6 +11,10 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class ProvisionPortRouter {
 
+    /**
+     * ProvisionInstancePort를 구현한 구현체의 Bean을 vendor 이름으로 매핑합니다.
+     * 예: "aws", "azure", "gcp" 등, @Service("aws") 어노테이션을 기반으로 Spring이 자동으로 Bean 이름을 설정합니다.
+     */
     private final Map<String, ProvisionInstancePort> provisionInstancePortMap;
     private final Map<String, ProvisionSubnetPort> provisionSubnetPortMap;
 
