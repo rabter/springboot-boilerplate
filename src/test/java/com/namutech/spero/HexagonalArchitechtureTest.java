@@ -1,9 +1,12 @@
 package com.namutech.spero;
 
+import com.namutech.spero.commonlib.common.util.DateTimeUtil;
+import com.namutech.spero.commonlib.entity.Workspace;
 import com.namutech.spero.dto.InstanceCreateRequestDTO;
 import com.namutech.spero.resource.context.ResourceAttribute;
 import com.namutech.spero.service.ResourceManagerService;
 import lombok.extern.slf4j.Slf4j;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,5 +66,22 @@ public class HexagonalArchitechtureTest {
          resourceManagerService.createInstance(requestDto);
 
         // Assertions 등을 사용하여 결과를 검증합니다.
+    }
+
+    @Test
+    @DisplayName("Commonlib 의존성 테스트")
+    public void commonlibDependencyTest() {
+        // Commonlib 의존성이 제대로 작동하는지 확인하는 테스트를 작성합니다.
+        // 예를 들어, DateTimeUtil 클래스의 메서드를 호출하고 결과를 검증할 수 있습니다.
+
+        log.info("Commonlib 의존성 테스트 실행");
+        log.info(DateTimeUtil.nowToString());
+        Workspace ws = Workspace.builder()
+                .name("Test Workspace")
+                .description("This is a test workspace")
+                .build();
+        Assertions.assertThat(ws.getName()).isEqualTo("Test Workspace");
+        // Assertions.assertEquals("expected format", DateTimeUtil.nowToString());
+
     }
 }

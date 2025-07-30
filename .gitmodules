@@ -1,0 +1,3 @@
+[submodule "spero-commonlib"]
+	path = spero-commonlib
+	url = https://github.com/rabter/spero-commonlib.git
