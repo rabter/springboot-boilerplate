@@ -20,7 +20,7 @@ configurations {
 }
 
 repositories {
-	mavenLocal()	// 로컬 Maven 저장소에서 읽음
+	//mavenLocal()	// 로컬 Maven 저장소에서 읽음
 	mavenCentral()
 	maven { url 'https://repo.spring.io/snapshot' }
 }
@@ -58,7 +58,7 @@ dependencies {
 	implementation 'org.springframework.kafka:spring-kafka'
 
 	// Common-lib
-	implementation 'com.namutech.spero.commonlib:common-lib:0.0.1-commonlib-SNAPSHOT'
+	//implementation 'com.namutech.spero.commonlib:common-lib:0.0.1-commonlib-SNAPSHOT'
 }
 
 tasks.named('test') {
