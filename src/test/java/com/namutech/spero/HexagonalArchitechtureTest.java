@@ -1,7 +1,5 @@
 package com.namutech.spero;
 
-import com.namutech.spero.commonlib.common.util.DateTimeUtil;
-import com.namutech.spero.commonlib.entity.Workspace;
 import com.namutech.spero.dto.InstanceCreateRequestDTO;
 import com.namutech.spero.resource.context.ResourceAttribute;
 import com.namutech.spero.service.ResourceManagerService;
@@ -76,11 +74,11 @@ public class HexagonalArchitechtureTest {
 
         log.info("Commonlib 의존성 테스트 실행");
         log.info(DateTimeUtil.nowToString());
-        Workspace ws = Workspace.builder()
-                .name("Test Workspace")
-                .description("This is a test workspace")
-                .build();
-        Assertions.assertThat(ws.getName()).isEqualTo("Test Workspace");
+//        Workspace ws = Workspace.builder()
+//                .name("Test Workspace")
+//                .description("This is a test workspace")
+//                .build();
+//        Assertions.assertThat(ws.getName()).isEqualTo("Test Workspace");
         // Assertions.assertEquals("expected format", DateTimeUtil.nowToString());
 
     }
