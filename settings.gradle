@@ -4,5 +4,6 @@ pluginManagement {
 		gradlePluginPortal()
 	}
 }
+rootProject.name = 'spero-local'
+// composite build로 연결
 includeBuild('spero-commonlib')
-rootProject.name = 'spero'

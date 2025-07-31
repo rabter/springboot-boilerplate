@@ -58,7 +58,6 @@ dependencies {
 	implementation 'org.springframework.kafka:spring-kafka'
 
 	// Common-lib
-	//implementation 'com.namutech.spero.commonlib:common-lib:0.0.1-commonlib-SNAPSHOT'
 	implementation("com.namutech.spero.commonlib:commonlib:0.0.1-commonlib-SNAPSHOT") // 로컬 프로젝트 의존성 추가
 	testImplementation("com.namutech.spero.commonlib:commonlib:0.0.1-commonlib-SNAPSHOT") // 로컬 프로젝트 의존성 추가
 }

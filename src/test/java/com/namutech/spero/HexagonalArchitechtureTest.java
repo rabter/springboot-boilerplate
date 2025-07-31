@@ -73,7 +73,7 @@ public class HexagonalArchitechtureTest {
         // 예를 들어, DateTimeUtil 클래스의 메서드를 호출하고 결과를 검증할 수 있습니다.
 
         log.info("Commonlib 의존성 테스트 실행");
-        log.info(DateTimeUtil.nowToString());
+//        log.info(DateTimeUtil.nowToString());
 //        Workspace ws = Workspace.builder()
 //                .name("Test Workspace")
 //                .description("This is a test workspace")
