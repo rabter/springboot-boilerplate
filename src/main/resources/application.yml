@@ -29,14 +29,15 @@ logging:
 #    org.springframework.kafka: DEBUG
 #    org.apache.kafka: WARN
 
+
 spero:
   default-port: 8080
   cors:
-    #allowed-origins: "*"
-    allowed-origins: ${ALLOWED_ORIGINS}
-    allowed-methods: "*"
-    allowed-headers: "*"
-    allow-credentials: true
+    allowed-origins: "*"
+#    allowed-origins: ${ALLOWED_ORIGINS}
+#    allowed-methods: "*"
+#    allowed-headers: "*"
+#    allow-credentials: true
 #  file:
 #    name: ./log/application.log
 #  pattern:
