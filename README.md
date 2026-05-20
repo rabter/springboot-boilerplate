@@ -50,9 +50,10 @@ git submodule update --init --recursive
 ```
 
 ### 3. .env (.gitignore)
-
+```text
 SPRING_PROFILES_ACTIVE=dev
 
-DB_URL=jdbc:mariadb://[IP]:3306
+DB_URL=jdbc:mariadb://[IP]:3306/[DATABASE]
 DB_USERNAME=[USERNAME]
 DB_PASSWORD=[PASSWORD]
+```

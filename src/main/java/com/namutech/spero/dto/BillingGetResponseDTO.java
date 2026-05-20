@@ -2,15 +2,10 @@ package com.namutech.spero.dto;
 
 import com.namutech.spero.entity.Billing;
 import lombok.*;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 @Getter
 @NoArgsConstructor
@@ -46,14 +41,6 @@ public class BillingGetResponseDTO {
                 .build();
     }
 
-    public static <T, R> Page<R> mapPage(Page<T> source, Function<T, R> mapper) {
-        List<R> convertList = source.getContent()
-                .stream()
-                .map(mapper)
-                .toList();
-
-        return new PageImpl<>(convertList, source.getPageable(), source.getTotalElements());
-    }
     /**
      * Custom Getter 메서드 (JSON 응답에 포함됨)
      * @return Map

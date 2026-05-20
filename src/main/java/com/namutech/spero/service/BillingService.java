@@ -1,6 +1,7 @@
 package com.namutech.spero.service;
 
 import com.namutech.spero.common.service.GenericService;
+import com.namutech.spero.common.util.PagingUtil;
 import com.namutech.spero.common.util.PredicateBuilderHelper;
 import com.namutech.spero.dto.BillingDTO;
 import com.namutech.spero.dto.BillingSearchConditionDTO;
@@ -11,9 +12,7 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.dsl.PathBuilder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,8 +31,8 @@ public class BillingService extends GenericService<Billing, QBilling, BillingSea
         return findAll(condition, QBilling.billing, q -> buildPredicate(condition));
     }
 
-    public Page<BillingDTO> getPagedBillings(int page, int size) {
-        return billingRepository.findAllByOrderByBillingIdDesc(PageRequest.of(page, size))
+    public Page<BillingDTO> getPagedBillings(int pageNumber, int pageSize) {
+        return billingRepository.findAllByOrderByBillingIdDesc(PagingUtil.toPageable(pageNumber, pageSize))
                 .map(BillingDTO::of);
     }
 

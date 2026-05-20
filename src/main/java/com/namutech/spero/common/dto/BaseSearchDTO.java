@@ -1,7 +1,9 @@
 package com.namutech.spero.common.dto;
 
+import com.namutech.spero.common.util.PagingUtil;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.springframework.data.domain.Pageable;
 
 @Getter
 @SuperBuilder
@@ -16,4 +18,15 @@ public abstract class BaseSearchDTO {
     @Builder.Default
     private int pageSize = DEFAULT_PAGE_SIZE;
 
+    public int getPageNumber() {
+        return pageNumber < 1 ? DEFAULT_PAGE_NUMBER : pageNumber;
+    }
+
+    public int getPageSize() {
+        return pageSize < 1 ? DEFAULT_PAGE_SIZE : pageSize;
+    }
+
+    public Pageable toPageable() {
+        return PagingUtil.toPageable(getPageNumber(), getPageSize());
+    }
 }

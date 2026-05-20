@@ -11,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +30,7 @@ public abstract class GenericService<T, Q extends EntityPath<T>, C extends BaseS
     protected abstract BooleanBuilder buildPredicate(C condition);
 
     public Pageable getPageable(C condition) {
-        return PageRequest.of(condition.getPageNumber() - 1, condition.getPageSize());
+        return condition.toPageable();
     }
 
     public Page<T> findAll(C condition, Q qClass, Function<Q, BooleanBuilder> predicateBuilder) {
